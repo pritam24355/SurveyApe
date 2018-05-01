@@ -45,7 +45,7 @@ class SignUp extends Component {
                                     <fieldset>
                                         <div className="form-group">
                                             <label className="control-label" >UserName</label>
-                                            <input onChange={ (e) => this.handleChange(e)} type="email" id="userEmail" required="required" name="userEmail" placeholder="Enter your email id" className="form-control"/>
+                                            <input onChange={ (e) => this.handleChange(e)} type="email" id="email" required="required" name="email" placeholder="Enter your email id" className="form-control"/>
                                         </div>
                                         <div className="form-group">
                                             <label className="control-label">Password</label>
@@ -62,19 +62,17 @@ class SignUp extends Component {
                                         </div>
 
                                         <div className="form-group">
-                                            <label className="control-label" >Gender</label><br/>
-                                            <input onChange={ (e) => this.handleChange(e)} type="radio" id="genderChoice1"
-                                                   name="gender" value="male"/>
-                                            <label className="control-label" >Male</label>
-                                            <input onChange={ (e) => this.handleChange(e)} type="radio" id="genderChoice2"
-                                                   name="gender" value="female"/>
-                                            <label className="control-label" >Female</label>
-                                            <input onChange={ (e) => this.handleChange(e)} type="radio" id="genderChoice3"
-                                                   name="gender" value="other"/>
-                                            <label className="control-label" >Other</label>
-                                            <input onChange={ (e) => this.handleChange(e)} type="radio" id="genderChoice4"
-                                                   name="gender" value="notSpecified"/>
-                                            <label className="control-label" >Prefer not to specify</label>
+                                            <label className="control-label" >Role</label><br/>
+                                            <input onChange={ (e) => this.handleChange(e)} type="radio" id="role"
+                                                   name="role" value="surveyor"/>
+                                            <label className="control-label" >Surveyor</label>
+                                            <input onChange={ (e) => this.handleChange(e)} type="radio" id="role"
+                                                   name="role" value="surveyee"/>
+                                            <label className="control-label" >Surveyee</label>
+                                            <input onChange={ (e) => this.handleChange(e)} type="radio" id="role"
+                                                   name="role" value="both"/>
+                                            <label className="control-label" >Both</label>
+
                                         </div>
                                         <button
                                             className="btn btn-primary"

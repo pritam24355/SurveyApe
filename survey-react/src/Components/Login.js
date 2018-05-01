@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import {Link} from "react-router-dom";
 
 class Login extends Component {
     constructor(props) {
@@ -62,7 +63,7 @@ class Login extends Component {
                                 </div>
                             </form>
                             <div className="row-fluid">
-                                <button data-toggle="tab"><span className="glyphicon glyphicon-circle-arrow-right"></span>New user?Sign Up</button>
+                                <Link to='/'><span className="glyphicon glyphicon-circle-arrow-right"></span>New user?Sign Up</Link>
                             </div>
                             {/*<div className="row col-offset-2">*/}
                             {/*<div className="panel panel-default">*/}

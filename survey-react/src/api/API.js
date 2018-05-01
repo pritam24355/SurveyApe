@@ -4,7 +4,7 @@ const headers = {
 };
 
 export const doRegister = (payload) =>
-    fetch(`${api}/registerUser`, {
+    fetch(`${api}/register`, {
         method: 'POST',
         headers: {
             ...headers,
