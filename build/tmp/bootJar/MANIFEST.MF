@@ -1,4 +1,0 @@
-Manifest-Version: 1.0
-Start-Class: edu.sjsu.cmpe275.Application
-Main-Class: org.springframework.boot.loader.JarLauncher
-

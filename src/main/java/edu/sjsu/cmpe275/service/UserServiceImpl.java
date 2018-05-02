@@ -1,7 +1,7 @@
 package edu.sjsu.cmpe275.service;
 
 import edu.sjsu.cmpe275.dto.UserDto;
-import edu.sjsu.cmpe275.error.UserAlreadyExistException;
+import edu.sjsu.cmpe275.exception.UserAlreadyExistException;
 import edu.sjsu.cmpe275.model.User;
 import edu.sjsu.cmpe275.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,20 +21,20 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public User registerNewUserAccount(UserDto accountDto) {
+    public User registerNewUser(UserDto userDto) {
 
         final User user = new User();
 
-        if (emailExist(accountDto.getEmail())) {
-            throw new UserAlreadyExistException("An account already exists with this email. Please use a new Email address" + accountDto.getEmail());
+        if (emailExist(userDto.getEmail())) {
+            throw new UserAlreadyExistException("An account already exists with this email. Please use a new Email address" + userDto.getEmail());
         } else {
 
-            user.setFirstName(accountDto.getFirstName());
-            user.setLastName(accountDto.getLastName());
-            user.setEmail(accountDto.getEmail());
-            user.setAge(accountDto.getAge());
-            user.setGender(accountDto.getGender());
-            user.setPhone(accountDto.getPhone());
+            user.setFirstName(userDto.getFirstName());
+            user.setLastName(userDto.getLastName());
+            user.setEmail(userDto.getEmail());
+            user.setAge(userDto.getAge());
+            user.setGender(userDto.getGender());
+            user.setPhone(userDto.getPhone());
 
             return userRepository.save(user);
         }

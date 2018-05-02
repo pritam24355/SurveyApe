@@ -16,13 +16,11 @@ public class User {
     private int phone;
     private String gender;
     private String password;
-    private String confirmPassword;
-
     public User() {
 
     }
 
-    public User(Long id, String firstName, String lastName, String email, int age, int phone, String gender, String password, String confirmPassword) {
+    public User(Long id, String firstName, String lastName, String email, int age, int phone, String gender, String password) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -31,7 +29,6 @@ public class User {
         this.phone = phone;
         this.gender = gender;
         this.password = password;
-        this.confirmPassword = confirmPassword;
     }
 
     public Long getId() {
@@ -96,13 +93,5 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getConfirmPassword() {
-        return confirmPassword;
-    }
-
-    public void setConfirmPassword(String confirmPassword) {
-        this.confirmPassword = confirmPassword;
     }
 }
