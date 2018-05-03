@@ -2,15 +2,7 @@ package com.surveyape.model;
 
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
-import javax.persistence.Table;
-import javax.persistence.Column;
-
-
+import javax.persistence.*;
 
 
 @Entity
@@ -20,7 +12,9 @@ public class User {
     @GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="userId")
     private int userId;
-    
+
+	@Column(name="code")
+	private int code;
   
 	@Column(name="firstName")
     private String firstName;
@@ -36,6 +30,8 @@ public class User {
     
 	@Column(name="role")
 	private String role;
+
+
 	
 	
 	
@@ -89,6 +85,13 @@ public class User {
 
 	public void setRole(String role) {
 		this.role = role;
+	}
+	public int getCode() {
+		return code;
+	}
+
+	public void setCode(int code) {
+		this.code = code;
 	}
 	
 }

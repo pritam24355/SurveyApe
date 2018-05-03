@@ -15,6 +15,8 @@ export const doRegister = (payload) =>
         body: JSON.stringify(payload)
     }).then(res => {
         console.log(res);
+        console.log("in response");
+
         return res;
     }).catch(error => {
         console.log("This is error");
@@ -22,7 +24,26 @@ export const doRegister = (payload) =>
     });
 
 export const doLogin = (payload) =>
-    fetch(`${api}/checkLogin`, {
+    fetch(`${api}/login`, {
+        method: 'POST',
+        headers: {
+            ...headers,
+            'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+        body: JSON.stringify(payload)
+    }).then(res => {
+        console.log(res);
+        return res;
+    })
+        .catch(error => {
+            console.log("This is error");
+            return error;
+        });
+
+
+export const doVerify = (payload) =>
+    fetch(`${api}/verifycode`, {
         method: 'POST',
         headers: {
             ...headers,

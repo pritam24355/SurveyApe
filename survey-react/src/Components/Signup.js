@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Link} from "react-router-dom";
+import {Link,Redirect,} from "react-router-dom";
 import 'react-bootstrap'
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 class SignUp extends Component {
