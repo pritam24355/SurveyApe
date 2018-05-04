@@ -21,8 +21,19 @@
 .App-intro {
   font-size: large;
 }
-
+.nav{
+  margin-bottom:9%;
+}
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}
+.btn.navbaruser{
+  margin-left:75%;
+}
+.btn-danger.navbarlogout{
+  margin-left:1%;
+}
+.pavan{
+  width:100%;
 }
