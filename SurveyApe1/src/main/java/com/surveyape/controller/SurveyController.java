@@ -1,8 +1,13 @@
 package com.surveyape.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+//import com.fasterxml.jackson.databind.ObjectMapper;
 import org.aspectj.apache.bcel.classfile.Code;
+import org.aspectj.weaver.patterns.TypePatternQuestions;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,15 +19,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import com.surveyape.model.User;
+import com.surveyape.model.Questions;
+
 import com.surveyape.service.UserService;
 
 import javax.servlet.http.HttpSession;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
+
 
 
 @Controller
@@ -88,6 +94,89 @@ public class SurveyController {
         }
 
     }
+    @PostMapping(path = "/submitsurvey", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> submitsurvey(@RequestBody String json, HttpSession session) throws IOException {
+        try {
+
+            JSONObject reqObj = new JSONObject(json);
+            String surveyTitle = reqObj.getString("Title");
+            JSONArray questionArray = reqObj.getJSONArray("questionsarray");
+            for (int i = 0; i < questionArray.length(); i++) {
+                JSONObject questionOnj = questionArray.getJSONObject(i);
+                String questionText = questionOnj.getString("question");
+                String questionType = questionOnj.getString("type");
+                String quest = userService.submitquestions(questionText, questionType);
+
+
+
+
+
+            }
+
+
+/*
+
+
+
+
+
+                ObjectMapper mapper = new ObjectMapper();
+            Map<String, Object> details;
+
+            details = mapper.readValue(json, HashMap.class);
+            System.out.println(details);
+           *//* Questionpojo questionpojo1= mapper.readValue(json,Questionpojo.class);
+            System.out.println(questionpojo1);*//*
+            // System.out.println(details.get("Title"));
+            //System.out.println();
+            ArrayList mainList = (ArrayList) details.get("questionsarray");
+            String roleListData= mapper.writeValueAsString(details.get("questionsarray"));
+            System.out.println(roleListData);
+            //Questionpojo quepojo=mapper.writeValue(,Questionpojo);
+            Gson gson = new Gson();
+            String json = gson.toJson(mainList);
+            System.out.println(json);
+           *//* return json;
+            String json1 = new Gson().toJson(mainList);*//*
+
+
+            // Questionpojo questionpojo1= mapper.readValue(,Questionpojo.class);
+            //System.out.println(questionpojo1.getQuestiontype());
+             System.out.println(mainList.getClass());
+            //  System.out.println(mainList.get(0).getClass());
+            Iterator<LinkedHashMap> itr = mainList.iterator();
+            while (itr.hasNext()) {
+                LinkedHashMap innerList = itr.next();
+                Set<String> keys = innerList.keySet();
+                for(String k:keys){
+                    System.out.println(k+" -- "+innerList.get(k));
+                }
+                //Iterator<LinkedHashMap> itrinner = innerList.forEach();
+               System.out.println(itr.next());
+
+                //System.out.println(itrinner.next());
+            }
+*//*
+            Map<String, String> quedetail;
+
+            quedetail = mapper.readValue(mainList.get(0),HashMap.class);
+*//*
+
+                // List<> questionpojoList= new ArrayList<Questionpojo>();
+                //questionpojoList=details.get("questionsarray");
+                //System.out.println(questionpojoList);
+                //    List<HashMap> questiondetails = mapper.readValue(details.get("questionarray"), List.class);
+                // System.out.println(questiondetails);*/
+
+                return new ResponseEntity(HttpStatus.OK);
+
+            } catch(RuntimeException e){
+                throw e;
+            }
+
+        }
+
+
     @PostMapping(path = "/login", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> userlogin(@RequestBody String json, HttpSession session) throws IOException {
         try {
@@ -106,4 +195,19 @@ public class SurveyController {
         }
 
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

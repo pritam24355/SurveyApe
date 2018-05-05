@@ -15,7 +15,7 @@ public class Questions {
 	private Integer questionId;
 	
 	@Column(name="questionType")
-	private Integer questionType;
+	private String questionType;
 	
 	@Column(name="questionName")
 	private String questionName;
@@ -34,11 +34,11 @@ public class Questions {
 		this.questionId = questionId;
 	}
 
-	public Integer getQuestionType() {
+	public String getQuestionType() {
 		return questionType;
 	}
 
-	public void setQuestionType(Integer questionType) {
+	public void setQuestionType(String questionType) {
 		this.questionType = questionType;
 	}
 

@@ -152,8 +152,8 @@ handleSubmit=(userdata) => {
             <Route exact path="/register" component={()=> <Signup handleSubmit={this.handleSubmit}/>}/>
             <Route exact path="/login" component={()=><Login handleSubmit={this.handleSubmitLogin}/>}/>
             <Route exact path="/verification" component={()=> <Verification handleSubmit={this.handleVerification}/>}/>
-            <Route exact path="/home" component={()=> <Home/>}/>
-            <Route exact path="/createsurvey" component={()=> <Form handleSubmitSurvey={this.handleSubmitSurvey}/>}/>
+            <Route exact path="/home" component={()=> <Home isLoggedIn={this.state.isLoggedIn} username={this.state.username} />}/>
+            <Route exact path="/createsurvey" component={()=> <Form handleSubmitSurvey={this.handleSubmitSurvey} isLoggedIn={this.state.isLoggedIn} username={this.state.username}/>}/>
 
 
         </Switch>

@@ -11,6 +11,11 @@ class Home extends Component{
 
         }
     }
+    componentWillMount(){
+        console.log(this.props.username);
+        console.log(this.props.isLoggedIn);
+    }
+
 
     render(){
         return(

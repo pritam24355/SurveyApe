@@ -19,13 +19,14 @@ class Form extends Component{
     }
     componentWillMount(){
         console.log(this.state.AddQuestionFlag);
+        console.log(this.props.isLoggedIn);
     }
 
     handleFormChange(event) {
             this.setState(
                 ...this.state,
                {
-                  [event.target.name]: event.target.value
+                  Title: event.target.value
                });
         }
     handleAddQuestion(){
@@ -59,7 +60,7 @@ class Form extends Component{
     handleSubmitSurveyForm() {
         console.log(this.state.questionsarray);
         var formData = new FormData();
-        formData=this.state.questionsarray;
+        formData=this.state;
         this.props.handleSubmitSurvey(formData);
 
 
