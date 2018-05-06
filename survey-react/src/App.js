@@ -6,6 +6,7 @@ import * as API from './api/API';
 import Verification from './Components/Verification';
 import Home from './Components/Home';
 import Form from './Components/Form';
+import DisplayForm from './Components/DisplayForm';
 
 import Signup from './Components/Signup';
 import Login from './Components/Login';
@@ -138,11 +139,44 @@ handleSubmit=(userdata) => {
                 console.log(err);
             })
 
-
-
-
-
 }
+    /*handleSurveyQuestions=(userdata)=>{
+
+        API.dogetSurveyQuestions(userdata)
+            .then((res) => {
+                    console.log(res.status);
+                    if (res.status === 200) {
+                        console.log("********");
+                        res.json().then(data => {
+                            console.log("data received");
+                            console.log(data.email);
+                            console.log(this.state);
+                            this.setState({
+                                ...this.state,
+                                isLoggedIn: true,
+                                username: data.email
+                            });
+                            console.log(this.state);
+                        });
+
+                        this.props.history.push("/home");
+                    } else if (res.status === 400) {
+                        this.setState({
+                            isLoggedIn: false,
+                            message: "Wrong Code. Try again..!!"
+                        });
+                    }
+                }
+            )
+            .catch((err) => {
+                console.log(err);
+            })
+
+
+
+
+
+    }*/
 
 
 
@@ -154,6 +188,7 @@ handleSubmit=(userdata) => {
             <Route exact path="/verification" component={()=> <Verification handleSubmit={this.handleVerification}/>}/>
             <Route exact path="/home" component={()=> <Home isLoggedIn={this.state.isLoggedIn} username={this.state.username} />}/>
             <Route exact path="/createsurvey" component={()=> <Form handleSubmitSurvey={this.handleSubmitSurvey} isLoggedIn={this.state.isLoggedIn} username={this.state.username}/>}/>
+            <Route exact path="/takesurvey" component={()=> <DisplayForm handleSubmitSurvey={this.handleSubmitSurvey} isLoggedIn={this.state.isLoggedIn} username={this.state.username}/>}/>
 
 
         </Switch>

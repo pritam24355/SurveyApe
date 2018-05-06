@@ -7,6 +7,7 @@ import Shorttext from './Options/Shorttext';
 import MultipleChoice from './Options/MultipleChoice';
 import Date from './Options/Date';
 import Panel from './Options/Panel'
+import Navbar from './Navbar';
 
 class Form extends Component{
     constructor(){
@@ -70,6 +71,8 @@ class Form extends Component{
 
     render(){
         return(
+            <div className="container">
+                <Navbar/>
             <div className="row">
                 <div className="col-md-12 col-lg-12">
                     <form className="form-horizontal" >
@@ -103,14 +106,14 @@ class Form extends Component{
                         }
 
 
-                        <button type="button" name="submitform" onClick={this.handleSubmitSurveyForm.bind(this)}>Submit</button>
+                        <button type="button" name="submitform" onClick={this.handleSubmitSurveyForm.bind(this)}>Publish</button>
                     </form>
 
                 </div>
 
                 </div>
 
-
+            </div>
 
 
 

@@ -2,48 +2,63 @@
 
 package com.surveyape.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
+import javax.persistence.*;
 
 @Entity
-@IdClass(Answerkey.class)
 public class Answers {
-	
+
 	@Id
-	@Column(name="surveyId")
-	private Integer surveyId;
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name="answerId")
+	private Integer answerId;
+
+
+	@ManyToOne
+	@JoinColumn(name="surveyId")
+	private Survey surveyId;
 	 
-	@Id
-	@Column(name="questionId")
-	private Integer questionId;
+	@ManyToOne
+	@JoinColumn(name="questionId")
+	private Questions questionId;
 	
-	@Id
-	@Column(name="userId")
-	private Integer userId;
+
+	@Column(name="userEmail")
+	private String useremail;
 	
 	@Column(name="answer")
 	private String answer;
-	
-	
 
-	public Integer getQuestionId() {
+
+	public Integer getAnswerId() {
+		return answerId;
+	}
+
+	public void setAnswerId(Integer answerId) {
+		this.answerId = answerId;
+	}
+
+	public Survey getSurveyId() {
+		return surveyId;
+	}
+
+	public void setSurveyId(Survey surveyId) {
+		this.surveyId = surveyId;
+	}
+
+	public Questions getQuestionId() {
 		return questionId;
 	}
 
-	public void setQuestionId(Integer questionId) {
+	public void setQuestionId(Questions questionId) {
 		this.questionId = questionId;
 	}
 
-	public Integer getUserId() {
-		return userId;
+	public String getUseremail() {
+		return useremail;
 	}
 
-	public void setUserId(Integer userId) {
-		this.userId = userId;
+	public void setUseremail(String useremail) {
+		this.useremail = useremail;
 	}
 
 	public String getAnswer() {
@@ -53,13 +68,4 @@ public class Answers {
 	public void setAnswer(String answer) {
 		this.answer = answer;
 	}
-
-	public Integer getSurveyId() {
-		return surveyId;
-	}
-
-	public void setSurveyId(Integer surveyId) {
-		this.surveyId = surveyId;
-	}
-
 }

@@ -8,10 +8,10 @@ import javax.persistence.*;
 @Entity
 @Table(name="user")
 public class User {
-    @Id
+ /*   @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="userId")
-    private int userId;
+    private int userId;*/
 
 	@Column(name="code")
 	private int code;
@@ -21,7 +21,8 @@ public class User {
     
 	@Column(name="lastName")
     private String lastName;
-	
+
+	@Id
 	@Column(name="email")
 	private String email;
 
@@ -40,14 +41,14 @@ public class User {
 	
 	
 
-	public int getUserId() {
+	/*public int getUserId() {
 		return userId;
 	}
 
 	public void setUserId(int userId) {
 		this.userId = userId;
 	}
-
+*/
 	public String getFirstName() {
 		return firstName;
 	}

@@ -2,6 +2,7 @@ package com.surveyape.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 //import com.fasterxml.jackson.databind.ObjectMapper;
+import com.surveyape.model.Survey;
 import org.aspectj.apache.bcel.classfile.Code;
 import org.aspectj.weaver.patterns.TypePatternQuestions;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -10,6 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.query.QueryUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -80,7 +82,7 @@ public class SurveyController {
             User user2 = userService.verifyUser(idRole);
             String strver = mapper.writeValueAsString(user2);
             System.out.println(strver);
-            if(strver.equals("null")){
+            if (strver.equals("null")) {
                 return new ResponseEntity(null, HttpStatus.BAD_REQUEST);
             }
 
@@ -94,24 +96,33 @@ public class SurveyController {
         }
 
     }
+
     @PostMapping(path = "/submitsurvey", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> submitsurvey(@RequestBody String json, HttpSession session) throws IOException {
         try {
 
             JSONObject reqObj = new JSONObject(json);
             String surveyTitle = reqObj.getString("Title");
+            //String email = reqObj.getString("username");
+            String email = "shripal555@gmail.com";
             JSONArray questionArray = reqObj.getJSONArray("questionsarray");
+            Survey s1 = new Survey();
+            User userVO = userService.finduserById(email);
+            s1.setEmail(userVO);
+            s1.setSurveyName(surveyTitle);
+            Survey surveyinfo = userService.setsurveyinfo(s1);
+
             for (int i = 0; i < questionArray.length(); i++) {
                 JSONObject questionOnj = questionArray.getJSONObject(i);
                 String questionText = questionOnj.getString("question");
                 String questionType = questionOnj.getString("type");
-                String quest = userService.submitquestions(questionText, questionType);
-
-
-
-
+                Questions idof = new Questions();
+                idof.getSurveyId();
+                Questions questof = userService.submitquestions(surveyinfo, questionText, questionType);
+                System.out.println(questof);
 
             }
+
 
 
 /*
@@ -168,27 +179,7 @@ public class SurveyController {
                 //    List<HashMap> questiondetails = mapper.readValue(details.get("questionarray"), List.class);
                 // System.out.println(questiondetails);*/
 
-                return new ResponseEntity(HttpStatus.OK);
-
-            } catch(RuntimeException e){
-                throw e;
-            }
-
-        }
-
-
-    @PostMapping(path = "/login", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> userlogin(@RequestBody String json, HttpSession session) throws IOException {
-        try {
-
-            ObjectMapper mapper = new ObjectMapper();
-            Map<String, String> details;
-            details = mapper.readValue(json,HashMap.class);
-            String email = details.get("inputUsername");
-            String password = details.get("inputPassword");
-            User user1=userService.loginaccount(email, password);
-
-            return new ResponseEntity(user1,HttpStatus.OK);
+            return new ResponseEntity(HttpStatus.OK);
 
         } catch (RuntimeException e) {
             throw e;
@@ -197,17 +188,44 @@ public class SurveyController {
     }
 
 
+    @PostMapping(path = "/login", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> userlogin(@RequestBody String json, HttpSession session) throws IOException {
+        try {
+
+            ObjectMapper mapper = new ObjectMapper();
+            Map<String, String> details;
+            details = mapper.readValue(json, HashMap.class);
+            String email = details.get("inputUsername");
+            String password = details.get("inputPassword");
+            User user1 = userService.loginaccount(email, password);
+
+            return new ResponseEntity(user1, HttpStatus.OK);
+
+        } catch (RuntimeException e) {
+            throw e;
+        }
+
+    }
 
 
+    @PostMapping(path = "/getsurvey", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public  @ResponseBody Iterable<Questions> getsurvey() throws IOException {
+        try {
+            //System.out.println("gsrdthf");
+            /*ObjectMapper mapper = new ObjectMapper();
+            Map<String, String> title;
+            title = mapper.readValue(json, HashMap.class);
+            String title1 = title.get("title");*/
+            String surveytit="Survey1";
+            Survey info = userService.findsurveyByTitle(surveytit);
+            return userService.findQuestionsbySurveyId(info);
+            //System.out.println(quesend.getQuestionName());
+            //return new ResponseEntity(HttpStatus.OK);
 
 
-
-
-
-
-
-
-
-
-
+        }
+        catch (RuntimeException e){
+            throw e;
+        }
+    }
 }

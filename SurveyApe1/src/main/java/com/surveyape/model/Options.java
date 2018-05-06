@@ -18,13 +18,12 @@ import javax.persistence.Id;
         @Column(name="optionId")
         private Integer optionId;
 
-        @Column(name="questionId")
-        private Integer questionId;
+        @ManyToOne
+        @JoinColumn(name = "questionId")
+        private Questions questionId;
 
-        @Column(name="surveyId")
-        private Integer surveyId;
 
-        @Column(name="otions")
+        @Column(name="options")
         private String options;
 
 
@@ -36,20 +35,12 @@ import javax.persistence.Id;
             this.optionId = optionId;
         }
 
-        public Integer getQuestionId() {
+        public Questions getQuestionId() {
             return questionId;
         }
 
-        public void setQuestionId(Integer questionId) {
+        public void setQuestionId(Questions questionId) {
             this.questionId = questionId;
-        }
-
-        public Integer getSurveyId() {
-            return surveyId;
-        }
-
-        public void setSurveyId(Integer surveyId) {
-            this.surveyId = surveyId;
         }
 
         public String getOptions() {
