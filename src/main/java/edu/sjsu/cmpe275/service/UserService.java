@@ -8,9 +8,7 @@ import java.util.Optional;
 
 public interface UserService {
 
-    User registerNewUser(UserDto accountDto) throws UserAlreadyExistException;
-
-    User findUserByEmail(String email);
+    User registerNewUser(UserDto accountDto, int verificationToken) throws UserAlreadyExistException;
 
     Optional<User> getUserById(long id);
 }

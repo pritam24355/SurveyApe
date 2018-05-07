@@ -21,7 +21,7 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public User registerNewUser(UserDto userDto) {
+    public User registerNewUser(UserDto userDto, int verificationToken) {
 
         final User user = new User();
 
@@ -35,24 +35,21 @@ public class UserServiceImpl implements UserService {
             user.setAge(userDto.getAge());
             user.setGender(userDto.getGender());
             user.setPhone(userDto.getPhone());
+            user.setPassword(userDto.getPassword());
+            user.setVerificationToken(verificationToken);
 
             return userRepository.save(user);
         }
 
     }
 
-    private boolean emailExist(String email){
+    public boolean emailExist(String email){
 
         User user = userRepository.findByEmail(email);
         if(user != null){
             return true;
         }
             return false;
-    }
-
-    @Override
-    public User findUserByEmail(String email) {
-        return userRepository.findByEmail(email);
     }
 
     @Override

@@ -1,5 +1,7 @@
 package edu.sjsu.cmpe275.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -16,11 +18,18 @@ public class User {
     private int phone;
     private String gender;
     private String password;
+
+    @JsonIgnore
+    private int verificationToken;
+
+    @Column(name = "isActive")
+    private boolean isActive = false;
+
     public User() {
 
     }
 
-    public User(Long id, String firstName, String lastName, String email, int age, int phone, String gender, String password) {
+    public User(Long id, String firstName, String lastName, String email, int age, int phone, String gender, String password, int verificationToken, boolean isActive) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -29,6 +38,9 @@ public class User {
         this.phone = phone;
         this.gender = gender;
         this.password = password;
+        this.verificationToken = verificationToken;
+        this.isActive = isActive;
+
     }
 
     public Long getId() {
@@ -93,5 +105,21 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public int getVerificationToken() {
+        return verificationToken;
+    }
+
+    public void setVerificationToken(int verificationToken) {
+        this.verificationToken = verificationToken;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
     }
 }
