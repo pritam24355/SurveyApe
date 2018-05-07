@@ -1,25 +1,23 @@
 package com.surveyape.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.surveyape.dao.QuestionsDAO;
-import com.surveyape.dao.SurveyDAO;
-import com.surveyape.model.Questions;
-import com.surveyape.model.Survey;
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
+import com.surveyape.dao.*;
+import com.surveyape.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import com.surveyape.dao.UserDAO;
-import com.surveyape.model.User;
 
 import java.util.*;
 
 @Service
 public class UserService {
 
+	@Autowired
+	SurveyAttendeeDAO surveyAttendeeDAO;
+
+
+	@Autowired
+	private AnswersDAO answersDAO;
 
 	@Autowired
 	private SurveyDAO surveyDAO;
@@ -51,12 +49,23 @@ public class UserService {
 		return userdao.findByEmailAndPassword(email,password);
 		/*ObjectMapper mapperObj = new ObjectMapper();
 		String str = mapperObj.writeValueAsString(user1);*/
-
-
-
         //return str;
     }
+	public SurveyAttendee addattendee(SurveyAttendee att) throws JsonProcessingException {
 
+
+		return surveyAttendeeDAO.save(att);
+
+	}
+
+	public SurveyAttendee getsurveyidfromatt(String email) throws JsonProcessingException {
+		return surveyAttendeeDAO.findByEmailId(email);
+
+	}
+	public List<Survey> findsurveybyId(SurveyAttendee sur) throws JsonProcessingException {
+		return surveyDAO.findBySurveyId(sur);
+
+	}
 
     public Questions submitquestions(Survey idof,String questionText,String questionType){
 		ObjectMapper mapper = new ObjectMapper();
@@ -108,6 +117,14 @@ public class UserService {
 		return questionsdao.findBySurveyId(survey);
     }
 
+	public Answers submitanswer(Answers s1){
+		return answersDAO.save(s1);
+
+	}
+	public User loginaccountforsession(String email){
+		return userdao.findByEmail(email);
+
+	}
 
 
 }

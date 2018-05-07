@@ -29,6 +29,14 @@ class Login extends Component {
         formData = this.state;
         this.props.handleSubmit(formData);
     }
+    componentWillMount(){
+        if (this.props.isLoggedIn){
+            this.props.handlePageChange("/home");
+        }
+        console.log(this.props.username);
+
+
+    }
 
     render(){
 
@@ -63,7 +71,7 @@ class Login extends Component {
                                 </div>
                             </form>
                             <div className="row-fluid">
-                                <Link to='/'><span className="glyphicon glyphicon-circle-arrow-right"></span>New user?Sign Up</Link>
+                                <Link to='/register'><span className="glyphicon glyphicon-circle-arrow-right"></span>New user?Sign Up</Link>
                             </div>
                             {/*<div className="row col-offset-2">*/}
                             {/*<div className="panel panel-default">*/}

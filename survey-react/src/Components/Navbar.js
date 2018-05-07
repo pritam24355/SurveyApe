@@ -3,6 +3,7 @@ import {Link,Redirect,withRouter} from "react-router-dom";
 import 'react-bootstrap'
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import '../App.css';
+import * as API from '.././api/API';
 class Navbar extends Component{
     constructor(props){
         super(props);
@@ -16,16 +17,18 @@ title:"Survey1"
 
 
     }
-    handleLogout(event) {
-
+    handleLogout() {
+        this.props.handleLogout();
     }
+
+
 
 
         render(){
         return(
             <div className="nav">
                 <button className="btn navbaruser" onClick={this.handleProfile} >Profile</button>
-                <button className="btn-danger navbarlogout" onClick={this.handleLogout()} >Logout</button>
+                <button className="btn-danger navbarlogout" onClick={this.handleLogout.bind(this)} >Logout</button>
             </div>
 
 

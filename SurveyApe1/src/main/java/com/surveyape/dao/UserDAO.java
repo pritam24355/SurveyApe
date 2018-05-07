@@ -8,5 +8,6 @@ public interface UserDAO extends JpaRepository<User,String> {
 
     User findByCodeEquals(Integer code);
     User findByEmailAndPassword(String email,String password);
+    User findByEmail(String email);
 
 }

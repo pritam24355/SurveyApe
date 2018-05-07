@@ -2,6 +2,8 @@
 
 package com.surveyape.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -13,17 +15,15 @@ public class Answers {
 	private Integer answerId;
 
 
-	@ManyToOne
-	@JoinColumn(name="surveyId")
-	private Survey surveyId;
+
 	 
 	@ManyToOne
+	@JsonIgnore
 	@JoinColumn(name="questionId")
 	private Questions questionId;
 	
 
-	@Column(name="userEmail")
-	private String useremail;
+
 	
 	@Column(name="answer")
 	private String answer;
@@ -37,13 +37,7 @@ public class Answers {
 		this.answerId = answerId;
 	}
 
-	public Survey getSurveyId() {
-		return surveyId;
-	}
 
-	public void setSurveyId(Survey surveyId) {
-		this.surveyId = surveyId;
-	}
 
 	public Questions getQuestionId() {
 		return questionId;
@@ -53,13 +47,7 @@ public class Answers {
 		this.questionId = questionId;
 	}
 
-	public String getUseremail() {
-		return useremail;
-	}
 
-	public void setUseremail(String useremail) {
-		this.useremail = useremail;
-	}
 
 	public String getAnswer() {
 		return answer;

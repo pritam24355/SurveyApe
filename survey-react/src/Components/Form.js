@@ -8,9 +8,10 @@ import MultipleChoice from './Options/MultipleChoice';
 import Date from './Options/Date';
 import Panel from './Options/Panel'
 import Navbar from './Navbar';
+import * as API from '../api/API';
 
 class Form extends Component{
-    constructor(){
+    constructor(props){
         super();
         this.state={
             questionsarray:[],
@@ -21,13 +22,21 @@ class Form extends Component{
     componentWillMount(){
         console.log(this.state.AddQuestionFlag);
         console.log(this.props.isLoggedIn);
+        this.setState({
+            isLoggedIn: this.props.isLoggedIn,
+            username:this.props.username
+        });
     }
+    handlePageChange = ((page) => {
+        this.props.history.push(page);
+    });
+
 
     handleFormChange(event) {
             this.setState(
                 ...this.state,
                {
-                  Title: event.target.value
+                  [event.target.name]: event.target.value
                });
         }
     handleAddQuestion(){
@@ -69,18 +78,35 @@ class Form extends Component{
 
 }
 
+    handleLogout(){
+        API.doLogout()
+            .then((res) => {
+                    console.log(res.status);
+                    if (res.status === 200) {
+                        this.props.handlePageChange("/login");
+                    } else if (res.status === 400) {
+                        this.props.handlePageChange("/home");
+                    }
+                }
+            )
+            .catch((err) => {
+                console.log(err);
+            })
+
+    }
+
     render(){
         return(
             <div className="container">
-                <Navbar/>
+                <Navbar  handlePageChange={this.handlePageChange}/>
             <div className="row">
                 <div className="col-md-12 col-lg-12">
                     <form className="form-horizontal" >
                         <div className="form-group ">
                             <label className="col-lg-3">Form Title  </label>
                             <div className="col-sm-8 col-md-8 col-lg-8">
-                                <input  onChange={ (e) => this.handleFormChange(e)} type="text" className="form-control" name="inputformname"
-                                       id="inputformname" placeholder="Title"/>
+                                <input  onChange={ (e) => this.handleFormChange(e)} type="text" className="form-control" name="Title"
+                                       id="Title" placeholder="Title"/>
 
                                 <button className="btn-primary" type="button" name="add"onClick={this.handleAddQuestion.bind(this)}>ADD Question</button>
 
@@ -104,7 +130,9 @@ class Form extends Component{
                                 <Panel addQuestion={this.addQuestion.bind(this)}/>
                             </div>
                         }
-
+                        <label>Register Users</label>
+                        <input  onChange={ (e) => this.handleFormChange(e)} type="text" className="form-control" name="inputemail"
+                                id="inputemail" placeholder="Enter emaiil to register"/>
 
                         <button type="button" name="submitform" onClick={this.handleSubmitSurveyForm.bind(this)}>Publish</button>
                     </form>

@@ -7,8 +7,8 @@ import * as API from '../api/API';
 import Shorttext from './Options/Shorttext';
 
 class DisplayForm extends Component{
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         this.state={
             loading: true,
             title:"Survey1",
@@ -17,11 +17,29 @@ class DisplayForm extends Component{
         }
     }
 
+    handleLogout(){
+        API.doLogout()
+            .then((res) => {
+                    console.log(res.status);
+                    if (res.status === 200) {
+                        this.props.handlePageChange("/login");
+                    } else if (res.status === 400) {
+                        this.props.handlePageChange("/home");
+                    }
+                }
+            )
+            .catch((err) => {
+                console.log(err);
+            })
+
+    }
+
     componentWillMount() {
         this.handleSurveyQuestions(this.state);
     }
 
     handleAnswerChange(questionId, answer) {
+
         this.state.answers[questionId] = answer
     }
 
@@ -57,6 +75,25 @@ class DisplayForm extends Component{
     }
 
     submitSurvey() {
+        console.log(this.state.answers);
+        API.doSubmitAnswers(this.state.answers)
+            .then((res) => {
+                console.log(res.status);
+                if (res.status === 200) {
+                    this.props.history.push("/home")
+
+                } else if (res.status === 400) {
+                    this.setState({
+                        isLoggedIn: false,
+                        message: "Wrong Code. Try again..!!"
+                    });
+                }
+            }
+        )
+            .catch((err) => {
+                console.log(err);
+            })
+        this.props.history.push("/home");
     }
 
     render(){
@@ -65,7 +102,7 @@ class DisplayForm extends Component{
         }
             return(
                 <div className="container">
-                    <Navbar/>
+                    <Navbar handlePageChange={this.props.handlePageChange}/>
                     <div className="row">
                         <div className="col-md-4 col-sm-4 col-lg-4">
                             <label className="col-lg-3">{this.state.title}</label>

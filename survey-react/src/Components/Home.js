@@ -7,16 +7,37 @@ import * as API from '../api/API';
 
 
 class Home extends Component{
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         this.state={
 
         }
     }
     componentWillMount(){
-        console.log(this.props.username);
-        console.log(this.props.isLoggedIn);
+        /*console.log(this.props.username);
+        console.log(this.props.isLoggedIn);*/
     }
+
+ handleLogout(){
+        API.doLogout()
+.then((res) => {
+    console.log(res.status);
+    if (res.status === 200) {
+    this.props.handlePageChange("/login");
+} else if (res.status === 400) {
+    this.props.handlePageChange("/home");
+}
+}
+)
+.catch((err) => {
+    console.log(err);
+})
+
+}
+    handlePageChange = ((page) => {
+        this.props.history.push(page);
+    });
+
 
     handleSurveyQuestions=(userdata)=>{
 
@@ -54,14 +75,14 @@ class Home extends Component{
     render(){
         return(
             <div className="container">
-                <Navbar handleSurveyQuestions={this.handleSurveyQuestions.bind(this)}/>
+                <Navbar handleLogout={this.handleLogout} handleSurveyQuestions={this.handleSurveyQuestions.bind(this)} handlePageChange={this.handlePageChange}/>
                 <div className="row">
                 <div className="col-md-4 col-sm-4 col-lg-4">
                     <Link to="/createsurvey" className="btn btn-success">Create Survey</Link>
                 </div>
                     <div className="col-md-4 col-sm-4 col-lg-4">
 
-                    <Link to="/takesurvey" className="btn btn-success">Take Survey</Link>
+                    <Link to="/listsurvey" className="btn btn-success">Take Survey</Link>
                     </div>
                 </div>
             </div>

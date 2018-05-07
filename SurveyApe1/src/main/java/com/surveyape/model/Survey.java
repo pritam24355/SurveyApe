@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import java.util.ArrayList;
 import java.util.List;
 
+
 @Entity
     public class Survey {
 
@@ -20,6 +21,9 @@ import java.util.List;
         @Column(name="surveyName")
         private String surveyName;
 
+    @OneToMany(mappedBy = "surveyId", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    private List<SurveyAttendee> surveyattendee;
+
     @ManyToOne
     @JoinColumn(name = "userEmail")
     private User email;
@@ -27,8 +31,7 @@ import java.util.List;
         @OneToMany(mappedBy = "surveyId", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
         private List<Questions> questionList=new ArrayList<Questions>();
 
-    @OneToMany(mappedBy = "surveyId", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
-    private List<Answers> responseList;
+
 
 
     public Integer getSurveyId() {
@@ -63,12 +66,15 @@ import java.util.List;
         this.questionList = questionList;
     }
 
-    public List<Answers> getResponseList() {
-        return responseList;
+    public List<SurveyAttendee> getSurveyattendee() {
+        return surveyattendee;
     }
 
-    public void setResponseList(List<Answers> responseList) {
-        this.responseList = responseList;
+    public void setSurveyattendee(List<SurveyAttendee> surveyattendee) {
+        this.surveyattendee = surveyattendee;
     }
+
+
+
 }
 
