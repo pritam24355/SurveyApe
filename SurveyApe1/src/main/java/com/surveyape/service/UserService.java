@@ -127,4 +127,10 @@ public class UserService {
 	}
 
 
+	public List<Survey> findallsurvey(){
+		return surveyDAO.findByOpenurlNotNull();
+
+	}
+
+
 }

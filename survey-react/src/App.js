@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
-import {Route, withRouter, Switch, Router,Redirect} from 'react-router-dom';
+import {Route, withRouter, Switch,Link, Router,Redirect} from 'react-router-dom';
 import './App.css';
 import * as API from './api/API';
 import Verification from './Components/Verification';
@@ -8,6 +8,9 @@ import Home from './Components/Home';
 import Form from './Components/Form';
 import DisplayForm from './Components/DisplayForm';
 import HandleSurvey from './Components/HandleSurvey';
+import Opensurveyform from './Components/Opensurveyform';
+
+import OpenSurvey from './Components/OpenSurvey';
 
 import AlertContainer from 'react-alert';
 import {alertOptions, showAlert} from "./Components/alertConfig";
@@ -27,42 +30,8 @@ class App extends Component {
     }
 
 
-    componentWillMount(){
-
-            API.doCheckSession()
-                .then((res) => {
-                        console.log(res.status);
-                        if (res.status === 200) {
-                            console.log("***sessioncheck");
-                            res.json().then(email => {
-                                console.log("session received");
-                                console.log(email);
-                                this.setState({
-                                    ...this.state,
-                                    isLoggedIn: true,
-                                    username: email.email
-                                });
-                            });
-
-
-                        } else if (res.status === 404) {
-
-
-                            this.setState({
-                                isLoggedIn: false,
-                                message: "Wrong username or password. Try again..!!"
-                            });
-                            this.props.history.push("/login")
-                        }
-                    }
-                )
-                .catch((err) => {
-                    console.log(err);
-                })
-
-
-        }
-
+    componentWillMount() {
+    }
 
 
 
@@ -162,7 +131,7 @@ handleSubmit=(userdata)=>  {
             .then((res) => {
                     console.log(res.status);
                     if (res.status === 200) {
-                        this.props.history.push("/home");
+                        this.props.history.push("/login");
                     } else if (res.status === 400) {
 
                     }
@@ -180,6 +149,14 @@ handleSubmit=(userdata)=>  {
             url: url
         });
         this.props.history.push("/takesurvey");
+    }
+    handleurlvalue1(url){
+        console.log("ala re")
+        this.setState({
+            ...this.state,
+            url: url
+        });
+        this.props.history.push("/listopensurvey/takesurvey");
     }
 
 
@@ -259,6 +236,18 @@ handleSubmit=(userdata)=>  {
             <Route exact path="/takesurvey" component={()=> <DisplayForm handleLogout={this.handleLogout.bind(this)}url1={this.state.url} handlePageChange={this.handlePageChange} handleSubmitSurvey={this.handleSubmitSurvey} isLoggedIn={this.state.isLoggedIn} username={this.state.username}/>}/>
             <Route exact path="/listsurvey" component={()=> <DisplaySurvey handleLogout={this.handleLogout.bind(this)} handleurlvalue={this.handleurlvalue.bind(this)}handlePageChange={this.handlePageChange} handleSubmitSurvey={this.handleSubmitSurvey} isLoggedIn={this.state.isLoggedIn} username={this.state.username}/>}/>
             <Route path="/surveyform/:number" component={()=> <HandleSurvey handleLogout={this.handleLogout.bind(this)} handleurlvalue={this.handleurlvalue.bind(this)}handlePageChange={this.handlePageChange} handleSubmitSurvey={this.handleSubmitSurvey} isLoggedIn={this.state.isLoggedIn} username={this.state.username}/>}/>
+            <Route exact path="/listopensurvey" component={()=> <OpenSurvey handleLogout={this.handleLogout.bind(this)} handleurlvalue={this.handleurlvalue1.bind(this)}handlePageChange={this.handlePageChange} handleSubmitSurvey={this.handleSubmitSurvey} isLoggedIn={this.state.isLoggedIn} username={this.state.username}/>}/>
+            <Route exact path="/listopensurvey/takesurvey" component={()=> <Opensurveyform url1={this.state.url} handleurlvalue={this.handleurlvalue1.bind(this)}handlePageChange={this.handlePageChange} handleSubmitSurvey={this.handleSubmitSurvey} />}/>
+
+            <div className="container">
+            <div className="row">
+                <Link to="/listopensurvey" className="btn btn-success">Take Survey</Link>
+            </div>
+                <div className="row">
+                    <Link to="/login" className="btn btn-success">Login</Link>
+            </div>
+            </div>
+
 
 
         </Switch>

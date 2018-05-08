@@ -90,7 +90,7 @@ public class SurveyController {
             if (strver.equals("null")) {
                 return new ResponseEntity(null, HttpStatus.BAD_REQUEST);
             }
-
+                
            /* if (verifieduser.equals("null")) {
                 return new ResponseEntity(null, HttpStatus.NOT_FOUND);
             }*/
@@ -319,9 +319,6 @@ public class SurveyController {
         }
     }*/
 
-
-
-
     @PostMapping(path = "/getsurvey", consumes =MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
     Iterable<Questions> getsurvey(@RequestBody String json) throws IOException {
@@ -414,7 +411,54 @@ public class SurveyController {
         catch (RuntimeException e){
             throw e;
         }
-    }*/
+
+
+*/
+
+
+@GetMapping(path = "/getopenurl", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody ResponseEntity<HashMap> getopensurvey() throws IOException {
+        try {
+            Map<String,String> mapit=new HashMap<String, String>();
+            System.out.println("Came here");
+            String url="";
+            List li=new ArrayList();
+           List<Survey> list=userService.findallsurvey();
+           System.out.println(list.toString());
+            for (int i = 0; i < list.size(); i++) {
+
+            String url1=list.get(i).getOpenurl();
+            System.out.println(url1);
+
+                String titleof=list.get(i).getSurveyName();
+                System.out.println(titleof);
+
+                mapit.put(titleof,url1);
+
+
+
+            }
+
+
+
+                return new ResponseEntity(mapit,HttpStatus.OK);
+
+
+
+        } catch (RuntimeException e) {
+            throw e;
+        }
+    }
+
+
+
+
+
+
+
+
+
+
 
 
     @PostMapping(path = "/submitanswers", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -423,7 +467,7 @@ public class SurveyController {
             System.out.println("********************");
             JSONObject lol=new JSONObject(json);
 
-            System.out.println(lol.get("1"));
+            //System.out.println(lol.get("1"));
             System.out.println(lol);
 
             ObjectMapper mapper = new ObjectMapper();
