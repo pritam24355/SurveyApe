@@ -16,7 +16,8 @@ class Form extends Component{
         this.state={
             questionsarray:[],
             AddQuestionFlag:false,
-            Title:""
+            Title:"",
+            inputemail:""
         }
     }
     componentWillMount(){
@@ -45,11 +46,24 @@ class Form extends Component{
         });
     }
 
+
     addQuestion(type) {
         switch (type) {
             case "DATE":
+                this.state.questionsarray.push({
+                    type: "DATE"
+                });
+                this.setState({
+                    AddQuestionFlag: false
+                });
                 break;
             case "MC":
+                this.state.questionsarray.push({
+                    type: "MC"
+                });
+                this.setState({
+                    AddQuestionFlag: false
+                });
                 break;
             case "ST":
                 this.state.questionsarray.push({
@@ -60,8 +74,20 @@ class Form extends Component{
                 });
                 break;
             case "STAR":
+                this.state.questionsarray.push({
+                    type: "STAR"
+                });
+                this.setState({
+                    AddQuestionFlag: false
+                });
                 break;
             case "BOOL":
+                this.state.questionsarray.push({
+                    type: "BOOL"
+                });
+                this.setState({
+                    AddQuestionFlag: false
+                });
                 break;
         }
 
@@ -98,7 +124,7 @@ class Form extends Component{
     render(){
         return(
             <div className="container">
-                <Navbar  handlePageChange={this.handlePageChange}/>
+                <Navbar handleLogout={this.props.handleLogout} handlePageChange={this.handlePageChange}/>
             <div className="row">
                 <div className="col-md-12 col-lg-12">
                     <form className="form-horizontal" >
@@ -118,7 +144,10 @@ class Form extends Component{
                                 switch (question.type) {
                                     case "ST":
                                         return <Shorttext question={question}/>
-
+                                        break;
+                                    case "DATE":
+                                        return <Date question={question}/>
+                                            break;
                                 }
                             })
                         }

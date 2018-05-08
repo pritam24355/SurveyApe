@@ -9,6 +9,6 @@ import java.util.List;
 public interface SurveyDAO extends JpaRepository<Survey,Integer> {
         Survey findSurveysBySurveyName(String surveyname);
         List<Survey> findAll();
-        List<Survey> findBySurveyId(SurveyAttendee natt);
+        Survey findBySurveyId(Integer natt);
 
 }

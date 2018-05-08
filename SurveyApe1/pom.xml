@@ -83,7 +83,7 @@
 			<artifactId>jackson-annotations</artifactId>
 			<version>2.7.4</version>
 		</dependency>
-        <dependency>
+		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
 			<version>2.3.1</version>

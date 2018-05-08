@@ -34,6 +34,7 @@ class Home extends Component{
 })
 
 }
+    handleLogout
     handlePageChange = ((page) => {
         this.props.history.push(page);
     });
@@ -75,7 +76,7 @@ class Home extends Component{
     render(){
         return(
             <div className="container">
-                <Navbar handleLogout={this.handleLogout} handleSurveyQuestions={this.handleSurveyQuestions.bind(this)} handlePageChange={this.handlePageChange}/>
+                <Navbar handleLogout={this.props.handleLogout} handleSurveyQuestions={this.handleSurveyQuestions.bind(this)} handlePageChange={this.handlePageChange}/>
                 <div className="row">
                 <div className="col-md-4 col-sm-4 col-lg-4">
                     <Link to="/createsurvey" className="btn btn-success">Create Survey</Link>

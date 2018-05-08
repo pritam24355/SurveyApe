@@ -101,7 +101,7 @@ export const doSubmitAnswers = (payload) =>
             'Content-Type': 'application/json'
         },
         credentials: 'include',
-        body: JSON.stringify(payload)
+       // body: JSON.stringify(payload)
     }).then(res => {
         return res;
     })
@@ -143,7 +143,7 @@ export const doLogout = () =>
         });
 
 export const dogetSurveyTitle = (payload) =>
-    fetch(`${api}/getsurveytitle`, {
+    fetch(`${api}/dogetsurveytitle`, {
         method: 'POST',
         headers: {
             ...headers,
@@ -151,7 +151,24 @@ export const dogetSurveyTitle = (payload) =>
         },
         credentials: 'include',
         body: JSON.stringify(payload)
+    }).then(res => {
+        return res;
+    })
+        .catch(error => {
+            console.log("This is error");
+            return error;
+        });
 
+
+
+export const dogethandlesurvey = () =>
+    fetch(`${api}//http://localhost:3000/surveyform/:number`, {
+        method: 'GET',
+        headers: {
+            ...headers,
+            'Content-Type': 'application/json'
+        },
+        credentials: 'include',
     }).then(res => {
         return res;
     })

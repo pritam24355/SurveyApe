@@ -5,6 +5,7 @@ import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import Navbar from './Navbar';
 import * as API from '../api/API';
 import Shorttext from './Options/Shorttext';
+import Date from './Options/Date';
 
 class DisplayForm extends Component{
     constructor(props){
@@ -35,7 +36,14 @@ class DisplayForm extends Component{
     }
 
     componentWillMount() {
-        this.handleSurveyQuestions(this.state);
+
+        console.log(this.props.url1);
+        //var i=this.props.url1;
+
+        console.log(this.state);
+
+        //debugger;
+        this.handleSurveyQuestions(this.props.url1);
     }
 
     handleAnswerChange(questionId, answer) {
@@ -43,9 +51,17 @@ class DisplayForm extends Component{
         this.state.answers[questionId] = answer
     }
 
-    handleSurveyQuestions(userdata) {
-
-        API.dogetSurveyQuestions(userdata)
+    handleSurveyQuestions =(userdata)=> {
+//        debugger;
+        console.log(userdata);
+        /*this.setState({
+            title:userdata
+        });*/
+        let form={
+            idof:userdata
+        }
+        console.log(form);
+        API.dogetSurveyQuestions(form)
             .then((res) => {
                     console.log(res.status);
                     if (res.status === 200) {
@@ -102,7 +118,7 @@ class DisplayForm extends Component{
         }
             return(
                 <div className="container">
-                    <Navbar handlePageChange={this.props.handlePageChange}/>
+                    <Navbar handleLogout={this.props.handleLogout} handlePageChange={this.props.handlePageChange}/>
                     <div className="row">
                         <div className="col-md-4 col-sm-4 col-lg-4">
                             <label className="col-lg-3">{this.state.title}</label>
@@ -112,6 +128,11 @@ class DisplayForm extends Component{
                                         switch(question.questionType) {
                                             case "ST":
                                                 return <Shorttext question={question} answerMode={true} onAnswer={this.handleAnswerChange.bind(this)}/>
+
+                                            case "DATE":
+                                                return <Date question={question} answerMode={true} onAnswer={this.handleAnswerChange.bind(this)}/>
+                                            break;
+
                                         }
                                     })
                                 }

@@ -1,14 +1,17 @@
 package com.surveyape.controller;
 
 //import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.surveyape.model.*;
         import com.fasterxml.jackson.databind.ObjectMapper;
 
 
+import jdk.internal.cmm.SystemResourcePressureImpl;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-        import org.springframework.http.HttpStatus;
+import org.springframework.data.repository.query.Param;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
@@ -26,8 +29,12 @@ import java.util.*;
 
 
 @Controller
-@CrossOrigin(origins = "http://localhost:3000")
+//@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class SurveyController {
+
+    public Integer g;
     @Autowired
     private UserService userService;
 
@@ -53,7 +60,7 @@ public class SurveyController {
 
     @PostMapping(path = "/register", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> addNewUser(@RequestBody User user) {
-        System.out.println(user.getEmail());
+        try{System.out.println(user.getEmail());
         System.out.println(user.getFirstName());
         Random random = new Random();
         int code = random.nextInt(9999);
@@ -63,9 +70,12 @@ public class SurveyController {
         sendMail(user.getEmail(), "verification", "Code:" + user.getCode());
         return new ResponseEntity(null, HttpStatus.CREATED);
     }
+    catch (RuntimeException e){
+        throw e;}
+    }
 
     @PostMapping(path = "/verifycode", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> verificationofuser(@RequestBody String json) throws IOException {
+    public ResponseEntity<?> verificationofuser(@RequestBody String json,HttpSession session) throws IOException {
         try {
             ObjectMapper mapper = new ObjectMapper();
             Map<String, String> ids;
@@ -84,6 +94,8 @@ public class SurveyController {
            /* if (verifieduser.equals("null")) {
                 return new ResponseEntity(null, HttpStatus.NOT_FOUND);
             }*/
+
+           session.setAttribute("name",user2.getEmail());
             return new ResponseEntity(user2, HttpStatus.OK);
 
         } catch (RuntimeException e) {
@@ -95,53 +107,89 @@ public class SurveyController {
     @PostMapping(path = "/submitsurvey", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> submitsurvey(@RequestBody String json, HttpSession session) throws IOException {
         try {
-
+            System.out.println(json);
             JSONObject reqObj = new JSONObject(json);
             String surveyTitle = reqObj.getString("Title");
             String email = reqObj.getString("username");
             //String email = "shripal555@gmail.com";
             String reguser = reqObj.getString("inputemail");
-            String[] parts = reguser.split(",");
-            int len = parts.length;
-            System.out.println(len);
-            for (int i = 0; i < len; i++) {
-                String url = parts[i];
-                System.out.println(url);
-
-            }
-
-            System.out.println(parts);
             JSONArray questionArray = reqObj.getJSONArray("questionsarray");
-            Survey s1 = new Survey();
-            User userVO = userService.finduserById(email);
-            s1.setEmail(userVO);
-            s1.setSurveyName(surveyTitle);
-            Survey surveyinfo = userService.setsurveyinfo(s1);
 
 
-            for (String s : parts) {
-                //Do your stuff here
-                String url = tt.GetURL(s);
-                Boolean isValid = true;
-                SurveyAttendee sat = new SurveyAttendee();
-                sat.setEmailId(s);
-                sat.setSurveyId(surveyinfo);
-                sat.setSurveyUrl(url);
-                sat.setValid(isValid);
-                System.out.println("**************************************");
-                SurveyAttendee att = userService.addattendee(sat);
-                System.out.println(att.getAttendeeId());
+            if(reguser.equals("")){
+                String url=tt.GetURL(email,19000);
+                Survey s1 = new Survey();
+                User userVO = userService.finduserById(email);
+                s1.setEmail(userVO);
+                s1.setSurveyName(surveyTitle);
+                s1.setOpenurl(url);
+                Survey surveyinfo = userService.setsurveyinfo(s1);
+                int sursid=surveyinfo.getSurveyId();
+                String urlfinal=tt.GetURL(email,sursid);
+                s1.setOpenurl(urlfinal);
+                Survey surveyinfo1 = userService.setsurveyinfo(s1);
+
+
+                for (int i = 0; i < questionArray.length(); i++) {
+                    JSONObject questionOnj = questionArray.getJSONObject(i);
+                    String questionText = questionOnj.getString("question");
+                    String questionType = questionOnj.getString("type");
+                    Questions idof = new Questions();
+                    idof.getSurveyId();
+                    Questions questof = userService.submitquestions(surveyinfo1, questionText, questionType);
+                    System.out.println(questof);
+
+                }
+
+
 
             }
-            for (int i = 0; i < questionArray.length(); i++) {
-                JSONObject questionOnj = questionArray.getJSONObject(i);
-                String questionText = questionOnj.getString("question");
-                String questionType = questionOnj.getString("type");
-                Questions idof = new Questions();
-                idof.getSurveyId();
-                Questions questof = userService.submitquestions(surveyinfo, questionText, questionType);
-                System.out.println(questof);
+            else {
+                String[] parts = reguser.split(",");
+                int len = parts.length;
+                System.out.println(len);
+                for (int i = 0; i < len; i++) {
+                    String url = parts[i];
+                    System.out.println(url);
 
+                }
+
+                System.out.println(parts);
+                Survey s1 = new Survey();
+                User userVO = userService.finduserById(email);
+                s1.setEmail(userVO);
+                s1.setSurveyName(surveyTitle);
+                Survey surveyinfo = userService.setsurveyinfo(s1);
+
+                for (String s : parts) {
+                    //Do your stuff here
+                    Integer k = surveyinfo.getSurveyId();
+
+                    String url = tt.GetURL(s, k);
+                    Boolean isValid = true;
+                    SurveyAttendee sat = new SurveyAttendee();
+                    sat.setEmailId(s);
+                    sat.setSurveyId(surveyinfo);
+                    sat.setSurveyUrl(url);
+                    sat.setValid(isValid);
+                    System.out.println("**************************************");
+                    SurveyAttendee att = userService.addattendee(sat);
+                    System.out.println(att.getAttendeeId());
+                    sendMail(s, "RegisterLink", "Link:" + url);
+
+
+                }
+
+                for (int i = 0; i < questionArray.length(); i++) {
+                    JSONObject questionOnj = questionArray.getJSONObject(i);
+                    String questionText = questionOnj.getString("question");
+                    String questionType = questionOnj.getString("type");
+                    Questions idof = new Questions();
+                    idof.getSurveyId();
+                    Questions questof = userService.submitquestions(surveyinfo, questionText, questionType);
+                    System.out.println(questof);
+
+                }
             }
 
 
@@ -258,12 +306,41 @@ public class SurveyController {
     }
 
 
-    @PostMapping(path = "/getsurvey", consumes = MediaType.APPLICATION_JSON_VALUE)
+   /* @GetMapping(path = "/takesurvey/{id}", params = json,consumes = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
-    Iterable<Questions> getsurvey() throws IOException {
+    String takesurveyy(@PathVariable Integer id) throws IOException {
         try {
-            String surveytit = "Survey1";
-            Survey info = userService.findsurveyByTitle(surveytit);
+            System.out.println("afwesgrdeth");
+                System.out.println(id);
+                return "ok";
+
+        } catch (RuntimeException e) {
+            throw e;
+        }
+    }*/
+
+
+
+
+    @PostMapping(path = "/getsurvey", consumes =MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody
+    Iterable<Questions> getsurvey(@RequestBody String json) throws IOException {
+        try {
+            System.out.println("((((((((((())))))))))))))))");
+            JSONObject lol=new JSONObject(json);
+            System.out.println(json);
+
+            Integer surid= Integer.parseInt(String.valueOf(lol.get("idof")));
+            System.out.println(surid);
+            //System.out.println(json);
+            /*ObjectMapper mapper = new ObjectMapper();
+            Map<String, String> details;
+            details = mapper.readValue(json, HashMap.class);
+            System.out.println(details.get("id"));
+            System.out.println("made it"+surid);
+            String surveytit = "Survey1";*/
+
+            Survey info = userService.findsurveyByTitle(surid);
             return userService.findQuestionsbySurveyId(info);
 
         } catch (RuntimeException e) {
@@ -283,18 +360,42 @@ public class SurveyController {
     }
 
 
-    @PostMapping(path = "/dogetSurveyTitle", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody
-    ResponseEntity getsurveytitles(HttpSession session) throws IOException {
+    @PostMapping(path = "/dogetsurveytitle", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody ResponseEntity<HashMap> getsurveytitles(HttpSession session) throws IOException {
         try {
+
+                Map<String,String> mapit=new HashMap<String, String>();
+            ObjectMapper mapper = new ObjectMapper();
+            Map<String, String> details;
+            System.out.println("inside dispppppp");
             String email = (String) session.getAttribute("name");
-            SurveyAttendee surveyatt = userService.getsurveyidfromatt(email);
-            Survey sur = new Survey();
-           List<Survey> suroo= userService.findsurveybyId(surveyatt);
-           System.out.println("**************");
+            System.out.println(email);
+            List<SurveyAttendee> surveyatt = userService.getsurveyidfromatt(email);
+            List myList = new ArrayList();
+
+            for (int i = 0; i < surveyatt.size(); i++) {
+                System.out.println("shri");
+                String url=surveyatt.get(i).getSurveyUrl();
+                Survey sur=surveyatt.get(i).getSurveyId();
+                Integer idofsur=sur.getSurveyId();
+                Survey sur1=userService.findsurveybyId(idofsur);
+                String titleof=sur1.getSurveyName();
+                mapit.put(titleof,url);
+
+                //myList.add(titleof);
+                //System.out.println(myList);
+                //details=mapper.readValue(sur,HashMap.class);
+                //System.out.println(surveyatt.get(i));
+            }
+            System.out.println(mapit.toString());
 
 
-            return new ResponseEntity(suroo,HttpStatus.OK);
+            // System.out.println(surveyatt.getSurveyId());
+            //Survey sur = new Survey();
+           //return  userService.findsurveybyId(surveyatt);
+          // System.out.println("**************");
+            return new ResponseEntity(mapit,HttpStatus.OK);
+
 
 
         } catch (RuntimeException e) {
@@ -316,25 +417,15 @@ public class SurveyController {
     }*/
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     @PostMapping(path = "/submitanswers", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> submitanswers(@RequestBody String json, HttpSession session) throws IOException {
+    public ResponseEntity<?> submitanswers(@RequestBody String json,@RequestParam Map<String,String> params,HttpSession session) throws IOException {
         try {
-            System.out.println(json.getClass());
+            System.out.println("********************");
+            JSONObject lol=new JSONObject(json);
+
+            System.out.println(lol.get("1"));
+            System.out.println(lol);
+
             ObjectMapper mapper = new ObjectMapper();
             Map<Integer, String> details;
             details = mapper.readValue(json, HashMap.class);
@@ -353,7 +444,7 @@ public class SurveyController {
             }
 
 
-            return new ResponseEntity( HttpStatus.OK);
+            return new ResponseEntity(HttpStatus.OK);
 
         } catch (RuntimeException e) {
             throw e;

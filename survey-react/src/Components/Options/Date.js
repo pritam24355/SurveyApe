@@ -13,12 +13,12 @@ class Date extends Component{
     componentWillMount(){
     }
 
-    handleMultipleChange(event) {
-        this.setState(
-            ...this.state,
-            {
-                [event.target.name]: event.target.value
-            });
+    handleShortChange(event) {
+        this.props.question["question"] = event.currentTarget.value;
+    }
+
+    handleAnswerChange(event) {
+        this.props.onAnswer(this.props.question.questionId, event.currentTarget.value)
     }
 
 
@@ -28,18 +28,21 @@ class Date extends Component{
                 <form className="form-horizontal" >
                     <div className="form-group ">
                         <div className="col-sm-8 col-md-8 col-lg-8">
-                            <input onChange={ (e) => this.handleMultipleChange(e)} type="date" className="form-control" name="inputmultiplequestion"
-                                   id="date"/>
+                            {
+                                this.props.answerMode && <p>{this.props.question.questionName}</p> ||
+                                !this.props.answerMode && <input onChange={ (e) => this.handleShortChange(e)} type="text" className="form-control" name="date"
+                                                                 id="date" placeholder="Select date"/>
+                            }
 
-
-
+                            {
+                                this.props.answerMode && <input type="date" onChange={this.handleAnswerChange.bind(this)} placeholder="Your answer here..." className="form-control" />
+                            }
                         </div>
                     </div>
 
                 </form>
 
             </div>
-
 
 
 

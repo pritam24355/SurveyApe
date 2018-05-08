@@ -58,11 +58,11 @@ public class UserService {
 
 	}
 
-	public SurveyAttendee getsurveyidfromatt(String email) throws JsonProcessingException {
+	public List<SurveyAttendee> getsurveyidfromatt(String email) throws JsonProcessingException {
 		return surveyAttendeeDAO.findByEmailId(email);
 
 	}
-	public List<Survey> findsurveybyId(SurveyAttendee sur) throws JsonProcessingException {
+	public Survey findsurveybyId(Integer sur) throws JsonProcessingException {
 		return surveyDAO.findBySurveyId(sur);
 
 	}
@@ -84,8 +84,8 @@ public class UserService {
 		return surveyDAO.save(s1);
 
 	}
-	public Survey findsurveyByTitle(String title){
-	   return surveyDAO.findSurveysBySurveyName(title);
+	public Survey findsurveyByTitle(Integer title){
+	   return surveyDAO.findOne(title);
 
     }
 

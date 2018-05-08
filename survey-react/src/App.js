@@ -7,6 +7,10 @@ import Verification from './Components/Verification';
 import Home from './Components/Home';
 import Form from './Components/Form';
 import DisplayForm from './Components/DisplayForm';
+import HandleSurvey from './Components/HandleSurvey';
+
+import AlertContainer from 'react-alert';
+import {alertOptions, showAlert} from "./Components/alertConfig";
 
 import Signup from './Components/Signup';
 import Login from './Components/Login';
@@ -17,7 +21,8 @@ class App extends Component {
         super(props);
         this.state = {
             isLoggedIn: false,
-            username: ''
+            username: '',
+            url:''
         };
     }
 
@@ -62,7 +67,7 @@ class App extends Component {
 
 
 
-handleSubmit=(userdata) => {
+handleSubmit=(userdata)=>  {
     API.doRegister(userdata)
         .then((res) => {
             if (res.status === 201) {
@@ -83,7 +88,7 @@ handleSubmit=(userdata) => {
         .catch((err) => {
             console.log(err);
         })
-};
+}
 
 
  handleSubmitLogin=(userdata)=> {
@@ -118,7 +123,7 @@ handleSubmit=(userdata) => {
          .catch((err) => {
              console.log(err);
          })
- };
+ }
 
     handleVerification=(userdata)=>{
     API.doVerify(userdata)
@@ -150,19 +155,16 @@ handleSubmit=(userdata) => {
             .catch((err) => {
                 console.log(err);
             })
-};
+}
 
-    handleSubmitSurvey =(userdata)=>{
+    handleSubmitSurvey=(userdata)=>{
         API.doSubmitSurvey(userdata)
             .then((res) => {
                     console.log(res.status);
                     if (res.status === 200) {
                         this.props.history.push("/home");
                     } else if (res.status === 400) {
-                        this.setState({
-                            isLoggedIn: false,
-                            message: "Wrong Code. Try again..!!"
-                        });
+
                     }
                 }
             )
@@ -171,10 +173,40 @@ handleSubmit=(userdata) => {
             })
 
 }
-    handlePageChange = ((page) => {
-        this.props.history.push(page);
-    });
+    handleurlvalue(url){
+        console.log("ala re")
+        this.setState({
+            ...this.state,
+            url: url
+        });
+        this.props.history.push("/takesurvey");
+    }
 
+
+    handlePageChange(page) {
+        this.props.history.push(page);
+    }
+
+    handleLogout(){
+        API.doLogout()
+            .then((res) => {
+                    console.log(res.status);
+                    if (res.status === 200) {
+                        this.setState({
+                            isLoggedIn: false,
+                            message: "Wrong Code. Try again..!!"
+                        });
+                        this.props.history.push("/login");
+                    } else if (res.status === 400) {
+                        this.props.history.push("/home")
+                    }
+                }
+            )
+            .catch((err) => {
+                console.log(err);
+            })
+
+    }
 
     /*handleSurveyQuestions=(userdata)=>{
 
@@ -220,12 +252,13 @@ handleSubmit=(userdata) => {
     return (
         <Switch>
             <Route exact path="/register" component={()=> <Signup handleSubmit={this.handleSubmit}/>}/>
-            <Route exact path="/login" component={()=><Login handlePageChange={this.handlePageChange}isLoggedIn={this.state.isLoggedIn} username={this.state.username} handleSubmit={this.handleSubmitLogin}/>}/>
+            <Route exact path="/login" component={()=><Login handlePageChange={this.handlePageChange.bind(this)}isLoggedIn={this.state.isLoggedIn} username={this.state.username} handleSubmit={this.handleSubmitLogin}/>}/>
             <Route exact path="/verification" component={()=> <Verification handleSubmit={this.handleVerification}/>}/>
-            <Route exact path="/home" component={()=> <Home handlePageChange={this.handlePageChange} isLoggedIn={this.state.isLoggedIn} username={this.state.username} />}/>
-            <Route exact path="/createsurvey" component={()=> <Form handlePageChange={this.handlePageChange} handleSubmitSurvey={this.handleSubmitSurvey} isLoggedIn={this.state.isLoggedIn} username={this.state.username}/>}/>
-            <Route exact path="/takesurvey" component={()=> <DisplayForm handlePageChange={this.handlePageChange} handleSubmitSurvey={this.handleSubmitSurvey} isLoggedIn={this.state.isLoggedIn} username={this.state.username}/>}/>
-            <Route exact path="/listsurvey" component={()=> <DisplaySurvey handlePageChange={this.handlePageChange} handleSubmitSurvey={this.handleSubmitSurvey} isLoggedIn={this.state.isLoggedIn} username={this.state.username}/>}/>
+            <Route exact path="/home" component={()=> <Home handleLogout={this.handleLogout.bind(this)}handlePageChange={this.handlePageChange.bind(this)} isLoggedIn={this.state.isLoggedIn} username={this.state.username} />}/>
+            <Route exact path="/createsurvey" component={()=> <Form handleLogout={this.handleLogout.bind(this)}handlePageChange={this.handlePageChange} handleSubmitSurvey={this.handleSubmitSurvey} isLoggedIn={this.state.isLoggedIn} username={this.state.username}/>}/>
+            <Route exact path="/takesurvey" component={()=> <DisplayForm handleLogout={this.handleLogout.bind(this)}url1={this.state.url} handlePageChange={this.handlePageChange} handleSubmitSurvey={this.handleSubmitSurvey} isLoggedIn={this.state.isLoggedIn} username={this.state.username}/>}/>
+            <Route exact path="/listsurvey" component={()=> <DisplaySurvey handleLogout={this.handleLogout.bind(this)} handleurlvalue={this.handleurlvalue.bind(this)}handlePageChange={this.handlePageChange} handleSubmitSurvey={this.handleSubmitSurvey} isLoggedIn={this.state.isLoggedIn} username={this.state.username}/>}/>
+            <Route path="/surveyform/:number" component={()=> <HandleSurvey handleLogout={this.handleLogout.bind(this)} handleurlvalue={this.handleurlvalue.bind(this)}handlePageChange={this.handlePageChange} handleSubmitSurvey={this.handleSubmitSurvey} isLoggedIn={this.state.isLoggedIn} username={this.state.username}/>}/>
 
 
         </Switch>

@@ -21,7 +21,7 @@ public class TTestTypeURL_URLGenerator {
         public static final String             kAlphaDigit     = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         public static final String []          kSetProtocols =
                 {
-                        "http", "https"
+                        "http"
                 };
         public static final String []          kSetTLDs =
                 {
@@ -41,11 +41,11 @@ public class TTestTypeURL_URLGenerator {
             fGen = new Random ();
         }
 
-        public String GetURL (String email)
+        public String GetURL (String email,Integer s)
         {
             String      ret;
 
-            ret     = _GetPartProtocol ()+"://"+"surveyform/"+_GetPartHostPort ()+"."+ email;
+            ret     = _GetPartProtocol ()+"://localhost:3000/"+"surveyform/"+"."+ email+"."+s;
 
             return ret;
         }

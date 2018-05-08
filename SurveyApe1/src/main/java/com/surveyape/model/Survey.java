@@ -21,6 +21,9 @@ import java.util.List;
         @Column(name="surveyName")
         private String surveyName;
 
+        @Column(name="openurl")
+    private String openurl;
+
     @OneToMany(mappedBy = "surveyId", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     private List<SurveyAttendee> surveyattendee;
 
@@ -75,6 +78,12 @@ import java.util.List;
     }
 
 
+    public String getOpenurl() {
+        return openurl;
+    }
 
+    public void setOpenurl(String openurl) {
+        this.openurl = openurl;
+    }
 }
 

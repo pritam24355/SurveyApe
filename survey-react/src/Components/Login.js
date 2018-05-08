@@ -50,14 +50,14 @@ class Login extends Component {
                                 <div className="form-group ">
                                     <label className="col-lg-3">Username  </label>
                                     <div className="col-sm-8 col-md-8 col-lg-8">
-                                        <input onChange={ (e) => this.handleChange(e)} type="email" className="form-control" name="inputUsername"
+                                        <input onChange={ (e) => this.handleChange(e)} type="email" required="required" className="form-control" name="inputUsername"
                                                id="inputUsername" placeholder="Email Id"/>
                                     </div>
                                 </div>
                                 <div className="form-group">
                                     <label className="col-sm-3 col-md-3 col-lg-3" >Password  </label>
                                     <div className="col-sm-8 col-md-8 col-lg-8">
-                                        <input onChange={ (e) => this.handleChange(e)} type="password" className="form-control"
+                                        <input onChange={ (e) => this.handleChange(e)} type="password" required="required" className="form-control"
                                                name="inputPassword" id="inputPassword" placeholder="Password"/>
                                     </div>
                                 </div>

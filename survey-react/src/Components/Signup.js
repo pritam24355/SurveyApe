@@ -2,10 +2,18 @@ import React, {Component} from 'react';
 import {Link,Redirect,} from "react-router-dom";
 import 'react-bootstrap'
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
+/*import AlertContainer from 'react-alert';
+import {alertOptions, showAlert} from "./alertConfig";*/
+
 class SignUp extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            email:"",
+            password:"",
+            firstName:"",
+            lastName:"",
+
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -23,7 +31,37 @@ class SignUp extends Component {
 
     handleSubmitClick(event) {
 
+
         console.log(this.state);
+
+        if (this.state.email == "") {
+            console.log(this);
+            alert("Enter email");
+
+
+
+        }
+
+        if (this.state.password === "") {
+            console.log(this);
+
+            alert("Enter password");
+
+        }
+
+        if (this.state.firstName === "") {
+            console.log(this);
+
+            alert("Enter firstname");
+
+        }
+
+        if (this.state.lastName === "") {
+            console.log(this);
+
+            alert("Enter lastname");
+
+        }
 
         var formData = new FormData();
         formData = this.state;
@@ -34,6 +72,7 @@ class SignUp extends Component {
 
         return (
             <div className ="row">
+
                 <div className="col-sm-offset-4 col-md-offset-4 col-lg-offset-4 col-sm-6 col-md-6">
                     <div className="panel panel-default">
                         <div className="panel panel-body">
@@ -41,28 +80,28 @@ class SignUp extends Component {
                                 <li><Link to='/login'><span className="glyphicon glyphicon-circle-arrow-right"></span>Login</Link></li>
                             </ul>
                             <div id="pane1" className="tab-pane">
-                                <form className="text-justify">
+                                <form className="form-group">
                                     <fieldset>
                                         <div className="form-group">
                                             <label className="control-label" >UserName</label>
-                                            <input onChange={ (e) => this.handleChange(e)} type="email" id="email" required="required" name="email" placeholder="Enter your email id" className="form-control"/>
+                                            <input onChange={ (e) => this.handleChange(e)} type="email" id="email" required={true} name="email" placeholder="Enter your email id" className="form-control"/>
                                         </div>
                                         <div className="form-group">
                                             <label className="control-label">Password</label>
-                                            <input onChange={ (e) => this.handleChange(e)} type="password" required="required" id="password" name="password" placeholder="Enter Password" className="form-control"/>
+                                            <input onChange={ (e) => this.handleChange(e)} type="password" required={true} id="password" name="password" placeholder="Enter Password" className="form-control"/>
                                         </div>
 
                                         <div className="form-group">
                                             <label className="control-label" >First Name</label>
-                                            <input onChange={ (e) => this.handleChange(e)} type="text" id="firstName" required name="firstName" placeholder="Enter First Name" className="form-control"/>
+                                            <input onChange={ (e) => this.handleChange(e)} type="text" id="firstName" required={true} name="firstName" placeholder="Enter First Name" className="form-control"/>
                                         </div>
                                         <div className="form-group">
                                             <label className="control-label" >Last Name</label>
-                                            <input onChange={ (e) => this.handleChange(e)} type="text" required id="lastName" name="lastName" placeholder="Enter Last Name" className="form-control"/>
+                                            <input onChange={ (e) => this.handleChange(e)} type="text" required={true} id="lastName" name="lastName" placeholder="Enter Last Name" className="form-control"/>
                                         </div>
 
                                         <div className="form-group">
-                                            <label className="control-label" >Role</label><br/>
+                                            <label className="control-label" required={true} >Role</label><br/>
                                             <input onChange={ (e) => this.handleChange(e)} type="radio" id="role"
                                                    name="role" value="surveyor"/>
                                             <label className="control-label" >Surveyor</label>
@@ -82,6 +121,7 @@ class SignUp extends Component {
                                         </button>
                                     </fieldset>
                                 </form>
+
                             </div>
 
                         </div>
