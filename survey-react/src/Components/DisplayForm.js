@@ -119,8 +119,10 @@ class DisplayForm extends Component{
             return <p>Form is loading</p>
         }
             return(
+                <div>
+                <Navbar handleLogout={this.props.handleLogout} handlePageChange={this.props.handlePageChange}/>
                 <div className="container">
-                    <Navbar handleLogout={this.props.handleLogout} handlePageChange={this.props.handlePageChange}/>
+
                     <div className="row">
                         <div className="col-md-4 col-sm-4 col-lg-4">
                             <label className="col-lg-3">{this.state.title}</label>
@@ -138,6 +140,7 @@ class DisplayForm extends Component{
                                                 return <Date question={question} answerMode={true} onAnswer={this.handleAnswerChange.bind(this)}/>
 
 
+
                                         }
                                     })
                                 }
@@ -150,19 +153,11 @@ class DisplayForm extends Component{
 
                             </form>
 
-
-
-
-
-
-
-
-
                         </div>
                     </div>
 
 
-
+                </div>
 
 
                 </div>

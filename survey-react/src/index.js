@@ -6,7 +6,7 @@ import {BrowserRouter} from 'react-router-dom';
 import registerServiceWorker from './registerServiceWorker';
 
 ReactDOM.render(
-    <div className="wrapper container">
+    <div>
         <BrowserRouter>
             <App/>
         </BrowserRouter>

@@ -26,11 +26,20 @@ title:"Survey1"
 
         render(){
         return(
-            <div className="nav">
-                <button className="btn navbaruser" onClick={this.handleProfile} >Profile</button>
-                <button className="btn-danger navbarlogout" onClick={this.handleLogout.bind(this)} >Logout</button>
-            </div>
 
+
+            <div>
+            <nav className="navbar navbar-dark bg-dark">
+                <a className="navbar-brand" href="#">
+                SurveyApe
+                </a>
+            <a className="nav navbar-right">
+                {/*<button className="btn navbaruser pull-right" onClick={this.handleProfile} >Profile</button>*/}
+                <button className="btn-danger navbarlogout pull-right" onClick={this.handleLogout.bind(this)} >Logout</button>
+
+            </a>
+            </nav>
+            </div>
 
 
 

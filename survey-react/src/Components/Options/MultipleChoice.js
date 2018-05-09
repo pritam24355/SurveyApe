@@ -14,6 +14,7 @@ class MultipleChoice extends Component{
         }
 
 
+
     }
     componentWillMount(){
     }
@@ -39,6 +40,7 @@ class MultipleChoice extends Component{
     addOption() {
         this.props.question.options.push('');
         this.forceUpdate();
+
     }
 
     render(){
@@ -71,6 +73,7 @@ class MultipleChoice extends Component{
                                         </div>
                                     })
                             }
+
 
                             {
                                 this.props.answerMode && <input type="text" onChange={this.handleAnswerChange.bind(this)} placeholder="Your answer here..." className="form-control" />

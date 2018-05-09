@@ -71,6 +71,7 @@ class Date extends Component{
                                         </label>
                                     </form>
                                 </div>
+
                             }
                         </div>
                     </div>

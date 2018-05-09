@@ -75,15 +75,16 @@ class SignUp extends Component {
 
         return (
             <div>
+
+
                 <div className="container">
-                    <div className ="row">
-                        <div className="col-sm-offset-4 col-md-offset-4 col-lg-offset-4 col-sm-6 col-md-6">
+                    <div>
+                        <div>
                             <div className="panel panel-default">
-                                <div className="panel panel-body">
-                                    <ul id="dTab" className="nav nav-tabs">
-                                        <li><Link to='/login'><span className="glyphicon glyphicon-circle-arrow-right"></span>Login</Link></li>
-                                    </ul>
+                                <div className="panel panel-body registerform">
+
                                     <div id="pane1" className="tab-pane">
+                                        <label className="loginlabel">Register</label>
                                         <form className="text-justify">
                                             <fieldset>
                                                 <div>
@@ -130,13 +131,16 @@ class SignUp extends Component {
 
                                                 <div className="form-group">
                                                     <label className="control-label" >Role</label><br/>
-                                                    <input onChange={ (e) => this.handleChange(e)} type="radio" id="role"
+
+
+                                                    <input  onChange={ (e) => this.handleChange(e)} type="radio" id="role"
                                                            name="role" value="surveyor"/>
                                                     <label className="control-label" >Surveyor</label>
-                                                    <input onChange={ (e) => this.handleChange(e)} type="radio" id="role"
+                                                    <input className="radio" onChange={ (e) => this.handleChange(e)} type="radio" id="role"
                                                            name="role" value="surveyee"/>
                                                     <label className="control-label" >Surveyee</label>
-                                                    <input onChange={ (e) => this.handleChange(e)} type="radio" id="role"
+                                                    <input className="radio" onChange={ (e) => this.handleChange(e)} type="radio" id="role"
+
                                                            name="role" value="both"/>
                                                     <label className="control-label" >Both</label>
 
@@ -146,8 +150,15 @@ class SignUp extends Component {
                                                     type="button"
                                                     disabled={!this.state.formValid}
                                                     onClick={() => this.handleSubmitClick()}>
-                                                    Submit
+
+                                                    Sign Up
                                                 </button>
+                                                <a href="/login"
+                                                    className="btn btn-primary signinbtn"
+
+                                                 >
+                                                    Sign In
+                                                </a>
                                             </fieldset>
                                         </form>
                                     </div>

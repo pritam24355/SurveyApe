@@ -21,6 +21,7 @@ class HandleSurvey extends Component{
         console.log(newurl);
         this.props.handleurlvalue(newurl,mailurl);
 
+
     }
 
 

@@ -1,6 +1,9 @@
 .App {
   text-align: center;
 }
+.root{
+background-color:aquamarine ;
+}
 
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
@@ -13,9 +16,32 @@
   padding: 20px;
   color: white;
 }
+.radio{
+  margin-left: 25px;
+}
+.addquestionbutton{
+  margin-top: 15px;
+}
+.panel{
+  margin-top: 20px;
+}
+.pan{
+  margin-left: 15px;
+}
+.signinbtn{
+  margin-left: 25px;
+}
+.publishbutton{
+  margin-top: 15px;
+}
 
 .App-title {
   font-size: 1.5em;
+}
+.surveyform{
+  width: 60%;
+  margin-left: 22%;
+  margin-top: 6%;
 }
 
 .App-intro {
@@ -31,11 +57,39 @@
 .btn.navbaruser{
   margin-left:75%;
 }
-.btn-danger.navbarlogout{
+/*.btn-danger.navbarlogout{
   margin-left:1%;
-}
+}*/
 .pavan{
   width:100%;
+  margin-top: 12px;
+}
+.takesurveybutton{
+
+  margin-left: 45%;
+  margin-top: 10%;
+}
+.loginbutton{
+  margin-left: 47%;
+  margin-top: 3%;
+}
+.createsurveybutton{
+  margin-top: 50%;
+  margin-left: 40%;
+}
+.takesurvey{
+  margin-top: 50%;
+  margin-left: 40%;
+}
+
+#content {
+  text-align: center;
+  padding-top: 14%;
+  font-weight: 700 !important;
+  font-size: 5em !important;
+}
+.codebutton{
+  margin-left: 17px;
 }
 .give{
   margin-left: 15.5px;
@@ -103,7 +157,47 @@
 
 .rating label input:focus:not(:checked) ~ .icon:last-child {
   color: #000;
-  text-shadow: 0 0 5px #09f;
+  text-shadow: 0 0 5px #09f;}
+.surveyape{
+  font-size: 1em;
+}
+.code{
+  margin-left: 40%;
+  margin-top: 19%;
+}
+
+.loginemailinput{
+  width: 50%;
+}
+.formErrors{
+  color: red;
+  font-size: 20px;
+}
+
+body{
+  background-image: url("https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=612621fd686897b4812287430c8be9db&auto=format&fit=crop&w=1052&q=80") !important;
+  background-size: cover;
+  font-family: Lato !important;
+  height: 100%;
+  color: white;
+}
+.loginpage{
+  margin-left: 29%;
+  margin-top: 8%;
+}
+.registerform{
+
+}
+
+.loginlabel{
+  margin-left: 26%;
+  font-size: 37px;
+}
+
+.registerform{
+  width: 50%;
+  margin-left: 26%;
+  margin-top: 7%;
 }
 
 

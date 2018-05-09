@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+
 import {Link,Redirect,withRouter} from "react-router-dom";
 import 'react-bootstrap'
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
@@ -121,20 +122,24 @@ class Home extends Component{
 
     render(){
         return(
-            <div className="container">
+            <div>
                 <Navbar handleLogout={this.props.handleLogout} handleSurveyQuestions={this.handleSurveyQuestions.bind(this)} handlePageChange={this.handlePageChange}/>
-                <div className="row">
-                <div className="col-md-4 col-sm-4 col-lg-4">
-                    <Link to="/createsurvey" className="btn btn-success">Create Survey</Link>
-                </div>
-                    <div className="col-md-4 col-sm-4 col-lg-4">
+                <div className="container">
+                    <div className="row">
+                        <div className="col-md-6">
+                            <Link to="/createsurvey" className="btn btn-success createsurveybutton">Create Survey</Link>
+                        </div>
+                        <div className="col-md-6">
 
-                    <Link to="/listsurvey" className="btn btn-success">Take Survey</Link>
+                            <Link to="/listsurvey" className="btn btn-success takesurvey">Take Survey</Link>
+                        </div>
                     </div>
                 </div>
+
+
+
+
             </div>
-
-
 
 
 

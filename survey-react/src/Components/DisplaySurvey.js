@@ -72,11 +72,12 @@ handleLink(event){
 
         else {
             return (
+                <div>
 
-                <div className="container">
                     <Navbar handleLogout={this.props.handleLogout}/>
-
                 </div>
+
+
 
 
 

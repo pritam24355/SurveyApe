@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import {Link,withRouter} from "react-router-dom";
+
+import Navbar from './Navbar';
 import { FormErrors } from './FormErrors';
 
 class Login extends Component {
@@ -81,11 +83,14 @@ class Login extends Component {
     render(){
 
         return (
-            <div className="row">
-                <div className="col-md-6 col-lg-6">
-                    <div className="panel panel-primary">
-                        <div className="panel-heading">Login</div><br/>
-                        <div className="panel-body">
+            <div>
+
+                <div className="container">
+
+                <div>
+                    <div className="panel panel-primary loginpage">
+                        <label className="loginlabel">Login</label>
+                        <div className="panel-body ">
                             <form className="form-horizontal" >
                                 <div className="form-group ">
                                     <div>
@@ -93,7 +98,8 @@ class Login extends Component {
 
                                     </div>
                                     <label className="col-lg-3">Username  </label>
-                                    <div className="col-sm-8 col-md-8 col-lg-8 {`form-group ${this.errorClass(this.state.formErrors.email)}`}">
+
+                                    <div className="col-sm-8 col-md-8 col-lg-8 {`form-group ${this.errorClass(this.state.formErrors.email)}`} loginemailinput">
                                         <input
                                             onChange={ (e) => this.handleChange(e)}
                                             type="email"
@@ -136,8 +142,10 @@ class Login extends Component {
                             {/*</div>*/}
                             {/*</div>*/}
                         </div>
-                    </div>
+
                 </div>
+            </div>
+            </div>
             </div>
         );
     }

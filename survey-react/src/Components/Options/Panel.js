@@ -18,12 +18,13 @@ class Panel extends Component{
             <div className="pavan">
                 <form className="form-horizontal" >
                     <div className="form-group ">
-                        <div className="col-sm-8 col-md-8 col-lg-8">
+                        <div className="col-md-12 panel">
                             <button className="btn btn-primary" type="button" onClick={() => this.props.addQuestion("MC")} >MultipleChoice</button>
-                            <button className="btn btn-primary" type="button" onClick={() => this.props.addQuestion("ST")} >Short Text</button>
-                            <button className="btn btn-primary" type="button" onClick={() => this.props.addQuestion("DATE")} >Date</button>
-                            <button className="btn btn-primary" type="button" onClick={() => this.props.addQuestion("DATE")} >Yes/NO</button>
-                            <button className="btn btn-primary" type="button" onClick={() => this.props.addQuestion("DATE")} >StarRating</button>
+
+                            <button className="btn btn-primary pan" type="button" onClick={() => this.props.addQuestion("ST")} >Short Text</button>
+                            <button className="btn btn-primary pan" type="button" onClick={() => this.props.addQuestion("DATE")} >Date</button>
+                            <button className="btn btn-primary pan" type="button" onClick={() => this.props.addQuestion("BOOL")} >Yes/NO</button>
+                            <button className="btn btn-primary pan" type="button" onClick={() => this.props.addQuestion("STAR")} >StarRating</button>
                         </div>
                     </div>
 

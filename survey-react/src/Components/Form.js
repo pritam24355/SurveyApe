@@ -19,6 +19,7 @@ class Form extends Component{
             Title:"",
             inputemail:"",
             closed:false
+
         }
     }
     componentWillMount(){
@@ -180,18 +181,20 @@ class Form extends Component{
 
     render(){
         return(
+            <div>
+            <Navbar handleLogout={this.props.handleLogout} handlePageChange={this.handlePageChange}/>
             <div className="container">
-                <Navbar handleLogout={this.props.handleLogout} handlePageChange={this.handlePageChange}/>
-            <div className="row">
-                <div className="col-md-12 col-lg-12">
-                    <form className="form-horizontal" >
-                        <div className="form-group ">
-                            <label className="col-lg-3">Form Title  </label>
-                            <div className="col-sm-8 col-md-8 col-lg-8">
+
+            <div className="row surveyform">
+                <div className="col-md-12">
+                    <form>
+                        <div>
+                            <label>Survey Form Title  </label>
+                            <div>
                                 <input  onChange={ (e) => this.handleFormChange(e)} type="text" className="form-control" name="Title"
                                        id="Title" placeholder="Title"/>
 
-                                <button className="btn-primary" type="button" name="add"onClick={this.handleAddQuestion.bind(this)}>ADD Question</button>
+                                <button className="btn btn-primary addquestionbutton" type="button" name="add"onClick={this.handleAddQuestion.bind(this)}>ADD Question</button>
 
                             </div>
                         </div>
@@ -253,7 +256,7 @@ class Form extends Component{
                 </div>
 
             </div>
-
+            </div>
 
 
         );

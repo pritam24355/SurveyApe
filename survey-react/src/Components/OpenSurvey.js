@@ -74,10 +74,15 @@ class OpenSurvey extends Component {
         else {
             return (
 
-                <div className="container">
-                    <Navbar handleLogout={this.props.handleLogout}/>
+<div>
 
-                </div>
+
+        <Navbar handleLogout={this.props.handleLogout}/>
+
+
+
+</div>
+
 
 
 
