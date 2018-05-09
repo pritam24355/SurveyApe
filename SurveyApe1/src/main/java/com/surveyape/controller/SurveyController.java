@@ -96,6 +96,7 @@ public class SurveyController {
             }*/
 
            session.setAttribute("name",user2.getEmail());
+            sendMail(user2.getEmail(), "Confirmation", "Thankyou for registering"+""+user2.getFirstName());
             return new ResponseEntity(user2, HttpStatus.OK);
 
         } catch (RuntimeException e) {
@@ -111,12 +112,66 @@ public class SurveyController {
             JSONObject reqObj = new JSONObject(json);
             String surveyTitle = reqObj.getString("Title");
             String email = reqObj.getString("username");
+            //String email = (String) session.getAttribute("name");
+
             //String email = "shripal555@gmail.com";
             String reguser = reqObj.getString("inputemail");
+            String unique=reqObj.getString("role");
+
             JSONArray questionArray = reqObj.getJSONArray("questionsarray");
+            if(unique.equals("yes")){
+                String url=tt.GetURL("unique=true",19000);
+                Survey s1 = new Survey();
+                User userVO = userService.finduserById(email);
+                s1.setEmail(userVO);
+                s1.setSurveyName(surveyTitle);
+                s1.setOpenurl(url);
+                Survey surveyinfo = userService.setsurveyinfo(s1);
+                int sursid=surveyinfo.getSurveyId();
+                String urlfinal=tt.GetURL(email,sursid);
+                s1.setOpenurl(urlfinal);
+                Survey surveyinfo1 = userService.setsurveyinfo(s1);
 
 
-            if(reguser.equals("")){
+                for (int i = 0; i < questionArray.length(); i++) {
+                    JSONObject questionOnj = questionArray.getJSONObject(i);
+                    String questionText = questionOnj.getString("question");
+                    String questionType = questionOnj.getString("type");
+                    Questions idof = new Questions();
+                    idof.getSurveyId();
+                    Questions questof = userService.submitquestions(surveyinfo1, questionText, questionType);
+                    if(questionType.equals("MC")){
+                        JSONObject reqObj1 = new JSONObject(questionOnj.get("options"));
+                        System.out.println(reqObj1);
+                        System.out.println(questionOnj.get("options").getClass());
+
+
+
+                        Integer qid=questof.getQuestionId();
+                        Options opt=new Options();
+                        opt.setQuestionId(questof);
+                        //opt.setOptions();
+                        //userService.saveopt()
+                    }
+                    System.out.println(questof);
+
+                }
+
+
+
+            }
+
+
+
+
+
+
+
+
+
+
+
+            else if(reguser.equals("")){
                 String url=tt.GetURL(email,19000);
                 Survey s1 = new Survey();
                 User userVO = userService.finduserById(email);
@@ -137,6 +192,19 @@ public class SurveyController {
                     Questions idof = new Questions();
                     idof.getSurveyId();
                     Questions questof = userService.submitquestions(surveyinfo1, questionText, questionType);
+                   if(questionType.equals("MC")){
+                        JSONObject reqObj1 = new JSONObject(questionOnj.get("options"));
+                        System.out.println(reqObj1);
+                       System.out.println(questionOnj.get("options").getClass());
+
+
+
+                       Integer qid=questof.getQuestionId();
+                        Options opt=new Options();
+                        opt.setQuestionId(questof);
+                        //opt.setOptions();
+                        //userService.saveopt()
+                    }
                     System.out.println(questof);
 
                 }

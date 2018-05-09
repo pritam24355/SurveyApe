@@ -16,8 +16,10 @@ class HandleSurvey extends Component{
         var url = this.props.match.params.number;
         console.log(url);
         var newurl=url.charAt(url.length-1);
+        var mailurl=url.substring(1,url.length-2);
+        console.log(mailurl);
         console.log(newurl);
-        this.props.handleurlvalue(newurl);
+        this.props.handleurlvalue(newurl,mailurl);
 
     }
 

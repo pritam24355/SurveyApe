@@ -17,16 +17,53 @@ class Form extends Component{
             questionsarray:[],
             AddQuestionFlag:false,
             Title:"",
-            inputemail:""
+            inputemail:"",
+            closed:false
         }
     }
     componentWillMount(){
+        API.doCheckSession()
+            .then((res) => {
+                    console.log(res.status);
+                    if (res.status === 200) {
+                        console.log("***sessioncheck");
+                        res.json().then(email => {
+                            console.log("session received");
+                            console.log(email);
+                            this.setState({
+                                ...this.state,
+                                isLoggedIn: true,
+                                username: email.email
+                            });
+                        });
+
+
+                    } else if (res.status === 404) {
+
+
+                        this.setState({
+                            isLoggedIn: false,
+                            message: "Wrong username or password. Try again..!!"
+                        });
+                        this.props.history.push("/")
+                    }
+                }
+            )
+            .catch((err) => {
+                console.log(err);
+            })
+
         console.log(this.state.AddQuestionFlag);
         console.log(this.props.isLoggedIn);
-        this.setState({
+        console.log(this.props.username);
+
+        /*if(!this.props.isLoggedIn){
+            this.props.history.push("/");
+        }*/
+       /* this.setState({
             isLoggedIn: this.props.isLoggedIn,
             username:this.props.username
-        });
+        });*/
     }
     handlePageChange = ((page) => {
         this.props.history.push(page);
@@ -92,11 +129,31 @@ class Form extends Component{
         }
 
     }
+    handleclose(){
+        this.setState({
+            closed:true
+        })
+    }
 
     handleSubmitSurveyForm() {
-        console.log(this.state.questionsarray);
+        // console.log(this.state.questionsarray);
+        this.state.questionsarray.forEach((question) => {
+            switch(question.type) {
+                case "MC":
+                    var options = {};
+                    for(var i in question.options) {console.log(options[i] = question.options[i])}
+                    question.options = options;
+                    break;
+            }
+        });
+
         var formData = new FormData();
         formData=this.state;
+        console.log(formData);
+        if(this.state.role=="yes"&& this.state.inputemail!=""){
+            alert("select only one type of survey");
+            this.props.history.push("/createsurvey");
+        }
         this.props.handleSubmitSurvey(formData);
 
 
@@ -162,11 +219,33 @@ class Form extends Component{
                                 <Panel addQuestion={this.addQuestion.bind(this)}/>
                             </div>
                         }
-                        <label>Register Users</label>
-                        <input  onChange={ (e) => this.handleFormChange(e)} type="text" className="form-control" name="inputemail"
-                                id="inputemail" placeholder="Enter emaiil to register"/>
+                        {
+                            this.state.closed &&
+                        <div className="row"><label>Register Users</label>
+                        <input  onChange={(e) => this.handleFormChange(e)} type="text" className="form-control" name="inputemail"
+                            id="inputemail" placeholder="Enter emaiil to register"/>
+                        </div>}
 
-                        <button type="button" name="submitform" onClick={this.handleSubmitSurveyForm.bind(this)}>Publish</button>
+                        <div className="row">
+                            <div className="form-group">
+                                <label className="control-label" >Unique Survey?</label><br/>
+                                <input onChange={ (e) => this.handleFormChange(e)} type="radio" id="role"
+                                       name="role" value="yes"/>
+                                <label className="control-label" >Yes</label>
+                                <input onChange={ (e) => this.handleFormChange(e)} type="radio" id="role"
+                                       name="role" value="no"/>
+                                <label className="control-label" >No</label>
+                                <div className="row">
+
+                        <button type="button" className="btn-group" onClick={this.handleclose.bind(this)}>Closed Survey</button>
+
+                                </div><div className="row">
+                            <div className="give">
+                        <button type="button" className="btn-success" onClick={this.handleSubmitSurveyForm.bind(this)}>Publish</button>
+                            </div>
+                        </div>
+                            </div>
+                        </div>
                     </form>
 
                 </div>

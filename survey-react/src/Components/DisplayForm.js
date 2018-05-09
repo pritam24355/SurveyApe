@@ -6,6 +6,7 @@ import Navbar from './Navbar';
 import * as API from '../api/API';
 import Shorttext from './Options/Shorttext';
 import Date from './Options/Date';
+import MultipleChoice from './Options/MultipleChoice';
 
 class DisplayForm extends Component{
     constructor(props){
@@ -130,9 +131,12 @@ class DisplayForm extends Component{
                                             case "ST":
                                                 return <Shorttext question={question} answerMode={true} onAnswer={this.handleAnswerChange.bind(this)}/>
 
+
+                                            case "MC":
+                                                return <MultipleChoice question={question} answerMode={true} onAnswer={this.handleAnswerChange.bind(this)}/>
                                             case "DATE":
                                                 return <Date question={question} answerMode={true} onAnswer={this.handleAnswerChange.bind(this)}/>
-                                            break;
+
 
                                         }
                                     })

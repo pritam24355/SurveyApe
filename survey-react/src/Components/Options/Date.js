@@ -30,12 +30,47 @@ class Date extends Component{
                         <div className="col-sm-8 col-md-8 col-lg-8">
                             {
                                 this.props.answerMode && <p>{this.props.question.questionName}</p> ||
-                                !this.props.answerMode && <input onChange={ (e) => this.handleShortChange(e)} type="text" className="form-control" name="date"
-                                                                 id="date" placeholder="Select date"/>
+                                !this.props.answerMode &&
+                                <input onChange={ (e) => this.handleShortChange(e)} type="text" className="form-control" name="inputshortform"
+                                       id="inputshortform" placeholder="Question Text"/>
+
                             }
 
                             {
-                                this.props.answerMode && <input type="date" onChange={this.handleAnswerChange.bind(this)} placeholder="Your answer here..." className="form-control" />
+                                this.props.answerMode && <div className="row">
+                                    <form class="rating">
+                                        <label>
+                                            <input type="radio" name="stars" value="1" onClick={this.handleAnswerChange.bind(this)} />
+                                            <span class="icon">★</span>
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="stars" value="2" onClick={this.handleAnswerChange.bind(this)} />
+                                            <span class="icon">★</span>
+                                            <span class="icon">★</span>
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="stars" value="3" onClick={this.handleAnswerChange.bind(this)} />
+                                            <span class="icon">★</span>
+                                            <span class="icon">★</span>
+                                            <span class="icon">★</span>
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="stars" value="4" onClick={this.handleAnswerChange.bind(this)} />
+                                            <span class="icon">★</span>
+                                            <span class="icon">★</span>
+                                            <span class="icon">★</span>
+                                            <span class="icon">★</span>
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="stars" value="5" onClick={this.handleAnswerChange.bind(this)} />
+                                            <span class="icon">★</span>
+                                            <span class="icon">★</span>
+                                            <span class="icon">★</span>
+                                            <span class="icon">★</span>
+                                            <span class="icon">★</span>
+                                        </label>
+                                    </form>
+                                </div>
                             }
                         </div>
                     </div>
