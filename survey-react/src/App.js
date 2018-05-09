@@ -142,19 +142,21 @@ handleSubmit=(userdata)=>  {
             })
 
 }
-    handleurlvalue(url){
+    handleurlvalue(url,mailurl){
         console.log("ala re")
         this.setState({
             ...this.state,
-            url: url
+            url: url,
+            mailurl:mailurl
         });
         this.props.history.push("/takesurvey");
     }
-    handleurlvalue1(url){
+    handleurlvalue1(url,mailurl){
         console.log("ala re")
         this.setState({
             ...this.state,
-            url: url
+            url: url,
+            mailurl:mailurl
         });
         this.props.history.push("/listopensurvey/takesurvey");
     }
@@ -233,11 +235,11 @@ handleSubmit=(userdata)=>  {
             <Route exact path="/verification" component={()=> <Verification handleSubmit={this.handleVerification}/>}/>
             <Route exact path="/home" component={()=> <Home handleLogout={this.handleLogout.bind(this)}handlePageChange={this.handlePageChange.bind(this)} isLoggedIn={this.state.isLoggedIn} username={this.state.username} />}/>
             <Route exact path="/createsurvey" component={()=> <Form handleLogout={this.handleLogout.bind(this)}handlePageChange={this.handlePageChange} handleSubmitSurvey={this.handleSubmitSurvey} isLoggedIn={this.state.isLoggedIn} username={this.state.username}/>}/>
-            <Route exact path="/takesurvey" component={()=> <DisplayForm handleLogout={this.handleLogout.bind(this)}url1={this.state.url} handlePageChange={this.handlePageChange} handleSubmitSurvey={this.handleSubmitSurvey} isLoggedIn={this.state.isLoggedIn} username={this.state.username}/>}/>
+            <Route exact path="/takesurvey" component={()=> <DisplayForm handleLogout={this.handleLogout.bind(this)} mailurl={this.state.mailurl} url1={this.state.url} handlePageChange={this.handlePageChange} handleSubmitSurvey={this.handleSubmitSurvey} isLoggedIn={this.state.isLoggedIn} username={this.state.username}/>}/>
             <Route exact path="/listsurvey" component={()=> <DisplaySurvey handleLogout={this.handleLogout.bind(this)} handleurlvalue={this.handleurlvalue.bind(this)}handlePageChange={this.handlePageChange} handleSubmitSurvey={this.handleSubmitSurvey} isLoggedIn={this.state.isLoggedIn} username={this.state.username}/>}/>
             <Route path="/surveyform/:number" component={()=> <HandleSurvey handleLogout={this.handleLogout.bind(this)} handleurlvalue={this.handleurlvalue.bind(this)}handlePageChange={this.handlePageChange} handleSubmitSurvey={this.handleSubmitSurvey} isLoggedIn={this.state.isLoggedIn} username={this.state.username}/>}/>
             <Route exact path="/listopensurvey" component={()=> <OpenSurvey handleLogout={this.handleLogout.bind(this)} handleurlvalue={this.handleurlvalue1.bind(this)}handlePageChange={this.handlePageChange} handleSubmitSurvey={this.handleSubmitSurvey} isLoggedIn={this.state.isLoggedIn} username={this.state.username}/>}/>
-            <Route exact path="/listopensurvey/takesurvey" component={()=> <Opensurveyform url1={this.state.url} handleurlvalue={this.handleurlvalue1.bind(this)}handlePageChange={this.handlePageChange} handleSubmitSurvey={this.handleSubmitSurvey} />}/>
+            <Route exact path="/listopensurvey/takesurvey" component={()=> <Opensurveyform mailurl={this.state.mailurl} url1={this.state.url} handleurlvalue={this.handleurlvalue1.bind(this)}handlePageChange={this.handlePageChange} handleSubmitSurvey={this.handleSubmitSurvey} />}/>
 
             <div className="container">
             <div className="row">

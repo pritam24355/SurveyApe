@@ -148,6 +148,9 @@ class Form extends Component{
                                     case "DATE":
                                         return <Date question={question}/>
                                             break;
+
+                                    case "MC":
+                                        return <MultipleChoice question={question}/>
                                 }
                             })
                         }

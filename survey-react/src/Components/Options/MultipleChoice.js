@@ -6,21 +6,18 @@ import '../../App.css';
 class MultipleChoice extends Component{
     constructor(props){
         super();
-        this.state={
-
-        }
+        this.state={}
     }
     componentWillMount(){
     }
 
-    handleMultipleChange(event) {
-        this.setState(
-            ...this.state,
-            {
-                [event.target.name]: event.target.value
-            });
+    handleShortChange(event) {
+        this.props.question["question"] = event.currentTarget.value;
     }
 
+    handleAnswerChange(event) {
+        this.props.onAnswer(this.props.question.questionId, event.currentTarget.value)
+    }
 
     render(){
         return(
@@ -28,16 +25,15 @@ class MultipleChoice extends Component{
                 <form className="form-horizontal" >
                     <div className="form-group ">
                         <div className="col-sm-8 col-md-8 col-lg-8">
-                            <input onChange={ (e) => this.handleMultipleChange(e)} type="text" className="form-control" name="inputmultiplequestion"
-                                   id="inputmultiplequestion" placeholder="Question"/>
-                            <div className="radio">
-                                <label>
-                                    <input type="radio" onChange={ (e) => this.handleMultipleChange(e)} className="form-control" name="inputoption1"
-                                           id="inputoption1" placeholder="Options"/>
-                                </label>
-                            </div>
+                            {
+                                this.props.answerMode && <p>{this.props.question.questionName}</p> ||
+                                !this.props.answerMode && <input onChange={ (e) => this.handleShortChange(e)} type="text" className="form-control" name="inputshortform"
+                                                                 id="inputshortform" placeholder="Question Text"/>
+                            }
 
-
+                            {
+                                this.props.answerMode && <input type="text" onChange={this.handleAnswerChange.bind(this)} placeholder="Your answer here..." className="form-control" />
+                            }
                         </div>
                     </div>
 

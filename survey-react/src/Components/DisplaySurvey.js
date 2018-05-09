@@ -45,9 +45,11 @@ handleLink(event){
     event.preventDefault();
     var url = event.currentTarget.getAttribute("href");
     console.log(url);
+    var mailurl=url.substring(34,url.length-2);
+    console.log(mailurl);
     var newurl=url.charAt(url.length-1);
     console.log(newurl)
-    this.props.handleurlvalue(newurl);
+    this.props.handleurlvalue(newurl,mailurl);
 
 }
     render() {

@@ -43,7 +43,7 @@ class DisplayForm extends Component{
         console.log(this.state);
 
         //debugger;
-        this.handleSurveyQuestions(this.props.url1);
+        this.handleSurveyQuestions(this.props.url1,this.props.mailurl);
     }
 
     handleAnswerChange(questionId, answer) {
@@ -51,14 +51,15 @@ class DisplayForm extends Component{
         this.state.answers[questionId] = answer
     }
 
-    handleSurveyQuestions =(userdata)=> {
+    handleSurveyQuestions =(userdata,mailurl)=> {
 //        debugger;
         console.log(userdata);
         /*this.setState({
             title:userdata
         });*/
         let form={
-            idof:userdata
+            idof:userdata,
+            mailurl:mailurl
         }
         console.log(form);
         API.dogetSurveyQuestions(form)

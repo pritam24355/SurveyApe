@@ -131,6 +131,13 @@ public class UserService {
 		return surveyDAO.findByOpenurlNotNull();
 
 	}
+	public SurveyAttendee setattendeeagain(SurveyAttendee su){
+		return surveyAttendeeDAO.save(su);
+	}
+
+	public SurveyAttendee setattendee(String mail,Survey sur){
+		return surveyAttendeeDAO.findByEmailIdAndAndSurveyId(mail,sur);
+	}
 
 
 }

@@ -63,7 +63,7 @@ class Home extends Component{
        // if(!this.props.isLoggedIn){
          //   this.props.history.push("/login")
         }
-    
+
 
  handleLogout(){
         API.doLogout()

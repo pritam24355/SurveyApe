@@ -90,7 +90,7 @@ public class SurveyController {
             if (strver.equals("null")) {
                 return new ResponseEntity(null, HttpStatus.BAD_REQUEST);
             }
-                
+
            /* if (verifieduser.equals("null")) {
                 return new ResponseEntity(null, HttpStatus.NOT_FOUND);
             }*/
@@ -320,13 +320,17 @@ public class SurveyController {
     }*/
 
     @PostMapping(path = "/getsurvey", consumes =MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody
-    Iterable<Questions> getsurvey(@RequestBody String json) throws IOException {
+    public @ResponseBody Iterable<Questions> getsurvey(@RequestBody String json) throws IOException {
         try {
-            System.out.println("((((((((((())))))))))))))))");
-            JSONObject lol=new JSONObject(json);
-            System.out.println(json);
 
+
+
+            System.out.println("((((((((((())))))))))))))))");
+
+            JSONObject lol=new JSONObject(json);
+            System.out.println(lol.get("mailurl"));
+            System.out.println(json);
+            String mailurl= (String) lol.get("mailurl");
             Integer surid= Integer.parseInt(String.valueOf(lol.get("idof")));
             System.out.println(surid);
             //System.out.println(json);
@@ -338,9 +342,32 @@ public class SurveyController {
             String surveytit = "Survey1";*/
 
             Survey info = userService.findsurveyByTitle(surid);
-            return userService.findQuestionsbySurveyId(info);
+            User mailurl2=info.getEmail();
+            String mailurl3=mailurl2.getEmail();
+            if(mailurl3.equals(mailurl)){
+                return userService.findQuestionsbySurveyId(info);
 
-        } catch (RuntimeException e) {
+            }
+            else {
+                    System.out.println("ithealo");
+                System.out.println(mailurl);
+                System.out.println(surid);
+                Survey soa=new Survey();
+                soa.setSurveyId(surid);
+                SurveyAttendee su = userService.setattendee(mailurl,soa);
+                if (su.isValid()) {
+
+                    su.setValid(false);
+                    userService.setattendeeagain(su);
+                    return userService.findQuestionsbySurveyId(info);
+
+                }
+                else{
+                    List n=new ArrayList<>();
+                    return n;
+                }
+            }
+            }catch (RuntimeException e) {
             throw e;
         }
     }

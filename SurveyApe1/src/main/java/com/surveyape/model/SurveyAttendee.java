@@ -59,9 +59,7 @@ public class SurveyAttendee {
         this.surveyUrl = surveyUrl;
     }
 
-    public boolean isValid() {
-        return isValid;
-    }
+
 
     public void setValid(boolean valid) {
         isValid = valid;
@@ -73,5 +71,9 @@ public class SurveyAttendee {
 
     public void setSurveyId(Survey surveyId) {
         this.surveyId = surveyId;
+    }
+
+    public boolean isValid() {
+        return isValid;
     }
 }
