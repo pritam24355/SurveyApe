@@ -1,25 +1,65 @@
 import React, {Component} from 'react';
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import {Link} from "react-router-dom";
+import {Link,withRouter} from "react-router-dom";
+import { FormErrors } from './FormErrors';
 
 class Login extends Component {
     constructor(props) {
 
         super(props);
         this.state = {
+            inputUsername: '',
+            inputPassword: '',
+            formErrors: {email: '', password: ''},
+            emailValid: false,
+            passwordValid: false,
+            formValid: false
         };
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmitClick = this.handleSubmitClick.bind(this);
     }
 
-    handleChange(event) {
-        this.setState(
-            ...this.state,
-            {
-                [event.target.name]: event.target.value
-            });
+    handleChange(e) {
+        const name = e.target.name;
+        const value = e.target.value;
+        this.setState({[name]: value},
+            () => { this.validateField(name, value) });
     }
+
+    validateField(fieldName, value) {
+        let fieldValidationErrors = this.state.formErrors;
+        let emailValid = this.state.emailValid;
+        let passwordValid = this.state.passwordValid;
+
+        switch (fieldName) {
+            case 'inputUsername':
+                emailValid = value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
+                fieldValidationErrors.email = emailValid ? '' : ' is invalid';
+                break;
+            case 'inputPassword':
+                passwordValid = value.length >= 6;
+                fieldValidationErrors.password = passwordValid ? '' : ' is too short';
+                break;
+            default:
+                break;
+        }
+        this.setState({formErrors: fieldValidationErrors,
+            emailValid: emailValid,
+            passwordValid: passwordValid
+        }, this.validateForm);
+    }
+
+    validateForm() {
+        this.setState({formValid: this.state.emailValid && this.state.passwordValid});
+    }
+
+    errorClass(error) {
+        return(error.length === 0 ? '' : 'has-error');
+    }
+
+
+
 
     handleSubmitClick(event) {
 
@@ -33,7 +73,7 @@ class Login extends Component {
         if (this.props.isLoggedIn){
             this.props.handlePageChange("/home");
         }
-       // console.log(this.props.username);
+        console.log(this.props.username);
 
 
     }
@@ -48,23 +88,40 @@ class Login extends Component {
                         <div className="panel-body">
                             <form className="form-horizontal" >
                                 <div className="form-group ">
+                                    <div>
+                                        <FormErrors formErrors={this.state.formErrors} />
+
+                                    </div>
                                     <label className="col-lg-3">Username  </label>
-                                    <div className="col-sm-8 col-md-8 col-lg-8">
-                                        <input onChange={ (e) => this.handleChange(e)} type="email" required="required" className="form-control" name="inputUsername"
-                                               id="inputUsername" placeholder="Email Id"/>
+                                    <div className="col-sm-8 col-md-8 col-lg-8 {`form-group ${this.errorClass(this.state.formErrors.email)}`}">
+                                        <input
+                                            onChange={ (e) => this.handleChange(e)}
+                                            type="email"
+                                            value={this.state.inputUsername}
+                                            className="form-control"
+                                            name="inputUsername"
+                                            id="inputUsername"
+                                            placeholder="Email Id"/>
                                     </div>
                                 </div>
                                 <div className="form-group">
                                     <label className="col-sm-3 col-md-3 col-lg-3" >Password  </label>
-                                    <div className="col-sm-8 col-md-8 col-lg-8">
-                                        <input onChange={ (e) => this.handleChange(e)} type="password" required="required" className="form-control"
-                                               name="inputPassword" id="inputPassword" placeholder="Password"/>
+                                    <div className="col-sm-8 col-md-8 col-lg-8 {`form-group ${this.errorClass(this.state.formErrors.password)}`}">
+                                        <input
+                                            onChange={ (e) => this.handleChange(e)}
+                                            type="password"
+                                            className="form-control"
+                                            name="inputPassword"
+                                            value={this.state.inputPassword}
+                                            id="inputPassword"
+                                            placeholder="Password"/>
                                     </div>
                                 </div>
                                 <div className="form-group">
                                     <div
                                         className="col-xs-offset-4 col-sm-offset-4 col-md-offset-4 col-lg-offset-4">
                                         <button type="button"
+                                                disabled={!this.state.formValid}
                                                 onClick={() => this.handleSubmitClick()}
                                                 className="btn btn-primary">Sign in</button>
                                     </div>
@@ -86,4 +143,4 @@ class Login extends Component {
     }
 }
 
-export default Login;
+export default withRouter(Login);
