@@ -138,6 +138,10 @@ class Login extends Component {
                             <div className="row-fluid">
                                 <Link to='/register'><span className="glyphicon glyphicon-circle-arrow-right"></span>New user?Sign Up</Link>
                             </div>
+                            <div className="row-fluid">
+                                <Link to='/'><span className="glyphicon glyphicon-circle-arrow-right"></span>Back</Link>
+                            </div>
+
                             {/*<div className="row col-offset-2">*/}
                             {/*<div className="panel panel-default">*/}
                             {/*<span className="text text-danger">Invalid username / password</span>*/}

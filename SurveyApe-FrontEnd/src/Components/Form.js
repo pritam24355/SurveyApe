@@ -253,8 +253,14 @@ class Form extends Component{
                                 <div className="row">
 
                         <button type="button" className="btn-group" onClick={this.handleclose.bind(this)}>Closed Survey</button>
+                                </div>
+                                        <div className="row">
+                                        <label>Survey expires?</label>
+                                        <input type="date" onChange={ (e) => this.handleFormChange(e)} name="expiry"/>
+                                    </div>
 
-                                </div><div className="row">
+
+                                <div className="row">
                             <div className="give">
                         <button type="button" className="btn-success" onClick={this.handleSubmitSurveyForm.bind(this)}>Publish</button>
                             </div>

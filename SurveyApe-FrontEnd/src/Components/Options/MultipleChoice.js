@@ -51,13 +51,15 @@ class MultipleChoice extends Component{
                         <div className="col-sm-8 col-md-8 col-lg-8">
                             {
                                 this.props.answerMode && <p>{this.props.question.questionName}</p> ||
-                                !this.props.answerMode && <input onChange={ (e) => this.handleShortChange(e)} type="text" className="form-control" name="inputshortform"
+                                !this.props.answerMode &&<div> <input onChange={ (e) => this.handleShortChange(e)} type="text" className="form-control" name="inputshortform"
                                                                  id="inputshortform" placeholder="Question Text"/>
+                                    <div className="row">
+                                        <button className="btn-success" type="button" onClick={this.addOption.bind(this)}>Add options</button>
+                                    </div>
+                                </div>
                             }
 
-                            <div className="row">
-                                <button className="btn-success" type="button" onClick={this.addOption.bind(this)}>Add options</button>
-                            </div>
+
 
                             {
                                 !this.props.answerMode && this.props.question.options.map((el, index) => {

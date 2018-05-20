@@ -42,7 +42,7 @@ class Home extends Component{
                             isLoggedIn: false,
                             message: "Wrong username or password. Try again..!!"
                         });
-                        this.props.history.push("/")
+                        this.props.history.push("/login")
                     }
                 }
             )

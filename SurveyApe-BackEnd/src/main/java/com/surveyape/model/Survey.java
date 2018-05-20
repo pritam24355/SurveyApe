@@ -27,6 +27,9 @@ import java.util.List;
     @Column(name="isUnique")
     private String isUnique;
 
+    @Column(name="expiry")
+    private String  expiry;
+
     @OneToMany(mappedBy = "surveyId", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     private List<SurveyAttendee> surveyattendee;
 
@@ -96,6 +99,14 @@ import java.util.List;
 
     public void setIsUnique(String isUnique) {
         this.isUnique = isUnique;
+    }
+
+    public String getExpiry() {
+        return expiry;
+    }
+
+    public void setExpiry(String expiry) {
+        this.expiry = expiry;
     }
 }
 

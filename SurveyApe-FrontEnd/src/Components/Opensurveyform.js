@@ -80,8 +80,22 @@ class Opensurveyform extends Component{
                         });
 
                     } else if (res.status === 400) {
+
                         this.setState({
-                            isLoggedIn: false,
+                            message: "Wrong Code. Try again..!!"
+                        });
+                    }
+                    else if (res.status === 401) {
+                        alert("Survey expired")
+
+                        this.setState({
+                            message: "Wrong Code. Try again..!!"
+                        });
+                    }
+                    else if(res.status === 226) {
+                        alert("Form already submitted")
+
+                        this.setState({
                             message: "Wrong Code. Try again..!!"
                         });
                     }

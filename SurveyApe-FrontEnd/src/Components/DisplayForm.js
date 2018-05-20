@@ -74,7 +74,6 @@ class DisplayForm extends Component{
                         res.json().then(data => {
 
                             console.log(data);
-                            debugger;
 
                             this.setState({
                                 loading: false,
@@ -83,11 +82,26 @@ class DisplayForm extends Component{
                         });
 
                     } else if (res.status === 400) {
+
                         this.setState({
-                            isLoggedIn: false,
                             message: "Wrong Code. Try again..!!"
                         });
                     }
+                    else if (res.status === 401) {
+                        alert("Survey expired")
+
+                        this.setState({
+                            message: "Wrong Code. Try again..!!"
+                        });
+                    }
+                    else if(res.status === 226) {
+                        alert("Form already submitted")
+
+                        this.setState({
+                            message: "Wrong Code. Try again..!!"
+                        });
+                    }
+
                 }
             )
             .catch((err) => {
