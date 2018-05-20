@@ -36,7 +36,7 @@ import static java.lang.Integer.parseInt;
 
 
 @Controller
-@CrossOrigin(origins = "http://18.217.64.116:3000")
+@CrossOrigin(origins = "http://localhost:3000")
 //@CrossOrigin(origins = "*")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SurveyController {
