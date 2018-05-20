@@ -27,8 +27,11 @@ class DisplayForm extends Component{
             .then((res) => {
                     console.log(res.status);
                     if (res.status === 200) {
+                        alert("Successfully Logged out")
                         this.props.handlePageChange("/login");
                     } else if (res.status === 400) {
+                        alert("Failed to Log out")
+
                         this.props.handlePageChange("/home");
                     }
                 }
@@ -117,6 +120,7 @@ class DisplayForm extends Component{
             .then((res) => {
                 console.log(res.status);
                 if (res.status === 200) {
+
                     this.props.history.push("/home")
 
                 } else if (res.status === 400) {

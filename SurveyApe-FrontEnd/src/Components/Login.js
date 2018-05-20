@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import {Link,withRouter} from "react-router-dom";
+import * as API from '../api/API';
 
 import Navbar from './Navbar';
 import { FormErrors } from './FormErrors';
@@ -75,6 +76,37 @@ class Login extends Component {
         if (this.props.isLoggedIn){
             this.props.handlePageChange("/home");
         }
+        API.doCheckSession()
+            .then((res) => {
+                    console.log(res.status);
+                    if (res.status === 200) {
+                        console.log("***sessioncheck");
+                        res.json().then(email => {
+                            console.log("session received");
+                            console.log(email);
+                            this.setState({
+                                ...this.state,
+                                isLoggedIn: true,
+                                username: email.email
+                            });
+                            this.props.history.push("/home")
+                        });
+
+
+                    } else if (res.status === 404) {
+
+
+                        this.setState({
+                            isLoggedIn: false,
+                            message: "Wrong username or password. Try again..!!"
+                        });
+                        this.props.history.push("/login")
+                    }
+                }
+            )
+            .catch((err) => {
+                console.log(err);
+            })
 
 
         console.log(this.props.username);

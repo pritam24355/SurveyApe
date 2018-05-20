@@ -36,7 +36,7 @@ import static java.lang.Integer.parseInt;
 
 
 @Controller
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://18.217.64.116:3000")
 //@CrossOrigin(origins = "*")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SurveyController {
@@ -112,7 +112,7 @@ public class SurveyController {
 
     }
 
-    @PostMapping(path = "/submitsurvey", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(path = "/submitsurvey", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> submitsurvey(@RequestBody String json, HttpSession session) throws IOException {
         try {
             System.out.println(json);
@@ -143,6 +143,10 @@ public class SurveyController {
                      s1.setSurveyName(surveyTitle);
                      s1.setExpiry(datee);
                      s1.setIsUnique(url);
+                     if (reqObj.has("idof")){
+                         Survey sis=new Survey();
+                         s1.setSurveyId(Integer.valueOf(reqObj.getString("idof")));
+                         }
                      //s1.setOpenurl(url);
                      Survey surveyinfo = userService.setsurveyinfo(s1);
                      int sursid = surveyinfo.getSurveyId();
@@ -155,33 +159,30 @@ public class SurveyController {
                      //Survey surveyinfo1 = userService.setsurveyinfo(s1);
                      for (int i = 0; i < questionArray.length(); i++) {
                          JSONObject questionOnj = questionArray.getJSONObject(i);
-                         String questionText = questionOnj.getString("question");
-                         String questionType = questionOnj.getString("type");
+                         String questionText = questionOnj.getString("questionName");
+                         String questionType = questionOnj.getString("questionType");
                          Questions idof = new Questions();
                          idof.getSurveyId();
                          System.out.println(questionType);
                          if (questionType.equals("MC")) {
-                            // JSONArray questionArray1 = questionOnj.getJSONArray("options");
-                             //JSONObject optionee=reqObj.getJSONObject("options");
+
                              JSONObject reqObj1 = new JSONObject(questionOnj.get("options"));
                              System.out.println("idharudhar");
 
                              System.out.println(reqObj1.toString());
-                               /* for(int j=0;j<questionArray1.length();j++){
-                                    JSONObject questionOnj1 = questionArray1.getJSONObject(j);
 
-                                    String optionq = questionOnj1.getString(String.valueOf(j));
-                                    System.out.println(optionq);
-
-                                }*/
                              System.out.println(questionOnj.get("options").getClass());
                              //Integer qid = questof.getQuestionId();
                              Options opt = new Options();
-                             //opt.setQuestionId(questof);
-                             //opt.setOptions();
-                             //userService.saveopt()
+
                          }
-                         Questions questof = userService.submitquestions(surveyinfo, questionText, questionType);
+                         idof.setSurveyId(surveyinfo);
+                         idof.setQuestionName(questionText);
+                         idof.setQuestionType(questionType);
+                         if(questionOnj.has("questionId")){
+                             idof.setQuestionId(Integer.valueOf(questionOnj.getString("questionId")));
+                         }
+                         Questions questof = userService.submitquestions(idof);
 
                          System.out.println(questof);
 
@@ -195,6 +196,9 @@ public class SurveyController {
                      s1.setSurveyName(surveyTitle);
                      s1.setOpenurl(url);
                      s1.setExpiry(datee);
+                     if (reqObj.has("idof")){
+                         s1.setSurveyId(Integer.valueOf(reqObj.getString("idof")));
+                     }
                      Survey surveyinfo = userService.setsurveyinfo(s1);
                      int sursid = surveyinfo.getSurveyId();
                      String urlfinal = tt.GetURL(email, sursid);
@@ -204,11 +208,21 @@ public class SurveyController {
 
                      for (int i = 0; i < questionArray.length(); i++) {
                          JSONObject questionOnj = questionArray.getJSONObject(i);
-                         String questionText = questionOnj.getString("question");
-                         String questionType = questionOnj.getString("type");
+                         String questionText = questionOnj.getString("questionName");
+                         String questionType = questionOnj.getString("questionType");
+
                          Questions idof = new Questions();
                          idof.getSurveyId();
-                         Questions questof = userService.submitquestions(surveyinfo1, questionText, questionType);
+                         idof.setSurveyId(surveyinfo1);
+                         idof.setQuestionName(questionText);
+                         idof.setQuestionType(questionType);
+                       //  int tempQ = questionOnj.getString("questionId") != null ? questionOnj.get("questionId");
+                         if(questionOnj.has("questionId")){
+                             idof.setQuestionId((Integer) questionOnj.get("questionId"));
+                         }
+
+                         Questions questof = userService.submitquestions(idof);
+
                          if (questionType.equals("MC")) {
                              JSONObject reqObj1 = new JSONObject(questionOnj.get("options"));
                              System.out.println(reqObj1);
@@ -240,6 +254,9 @@ public class SurveyController {
                 s1.setEmail(userVO);
                 s1.setSurveyName(surveyTitle);
                 s1.setExpiry(datee);
+                 if (reqObj.has("idof")){
+                     s1.setSurveyId(Integer.valueOf(reqObj.getString("idof")));
+                 }
                 Survey surveyinfo = userService.setsurveyinfo(s1);
 
                 for (String s : parts) {
@@ -263,11 +280,18 @@ public class SurveyController {
 
                 for (int i = 0; i < questionArray.length(); i++) {
                     JSONObject questionOnj = questionArray.getJSONObject(i);
-                    String questionText = questionOnj.getString("question");
-                    String questionType = questionOnj.getString("type");
+                    String questionText = questionOnj.getString("questionName");
+                    String questionType = questionOnj.getString("questionType");
                     Questions idof = new Questions();
                     idof.getSurveyId();
-                    Questions questof = userService.submitquestions(surveyinfo, questionText, questionType);
+                    idof.setSurveyId(surveyinfo);
+                    idof.setQuestionName(questionText);
+                    idof.setQuestionType(questionType);
+                    if(questionOnj.has("questionId")){
+                        idof.setQuestionId(Integer.valueOf(questionOnj.getString("questionId")));
+                    }
+                    Questions questof = userService.submitquestions(idof);
+
                     System.out.println(questof);
 
                 }
@@ -435,7 +459,7 @@ public class SurveyController {
     }*/
 
     @PostMapping(path = "/getsurvey", consumes =MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody ResponseEntity<?> getsurvey(@RequestBody String json) throws IOException, ParseException {
+    public @ResponseBody ResponseEntity<?> getsurvey(@RequestBody String json,HttpSession session) throws IOException, ParseException {
         try {
             System.out.println("((((((((((())))))))))))))))");
 
@@ -467,8 +491,11 @@ public class SurveyController {
 
                 User mailurl2 = info.getEmail();
                 String mailurl3 = mailurl2.getEmail();
+                System.out.println(mailurl3+mailurl);
                 if (mailurl3.equals(mailurl)) {
+                    String ema= String.valueOf(session.getAttribute("name"));
                     System.out.println("Open");
+
                   Iterable<Questions> my =userService.findQuestionsbySurveyId(info);
                     return new ResponseEntity(my,HttpStatus.OK);
 
@@ -499,6 +526,29 @@ public class SurveyController {
             }
         }
             catch (RuntimeException e) {
+            throw e;
+        }
+    }
+
+    @PostMapping(path = "/geteditsurvey", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody ResponseEntity<?>  geteditsurvque(@RequestBody String json,HttpSession session) throws IOException {
+        try {
+            JSONObject lol = new JSONObject(json);
+            System.out.println(json);
+            Integer surid = parseInt(String.valueOf(lol.get("idof")));
+            Map<String,String> mapit=new HashMap<String, String>();
+            ObjectMapper mapper = new ObjectMapper();
+            Map<String, String> details;
+            Survey info=new Survey();
+            info.setSurveyId(surid);
+            System.out.println("inside dispppppp");
+            Iterable<Questions> my =userService.findQuestionsbySurveyId(info);
+
+            return new ResponseEntity(my,HttpStatus.OK);
+
+
+
+        } catch (RuntimeException e) {
             throw e;
         }
     }
@@ -610,6 +660,34 @@ public class SurveyController {
             for (int i = 0; i < list1.size(); i++) {
 
                 String url1=list1.get(i).getIsUnique();
+                System.out.println(url1);
+                String titleof=list1.get(i).getSurveyName();
+                System.out.println(titleof);
+                mapit.put(titleof,url1);
+            }
+            System.out.println(mapit.toString());
+
+
+            return new ResponseEntity(mapit,HttpStatus.OK);
+
+        } catch (RuntimeException e) {
+            throw e;
+        }
+    }
+
+    @GetMapping(path = "/getmysurvey", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody ResponseEntity<HashMap> getminesurvey(HttpSession session) throws IOException {
+        try {
+            Map<String,Integer> mapit=new HashMap<String, Integer>();
+            System.out.println("Came here");
+            String email= String.valueOf(session.getAttribute("name"));
+            String url="";
+            User us=new User();
+            us.setEmail(email);
+            List<Survey> list1=userService.findallsurveybyme(us);
+            for (int i = 0; i < list1.size(); i++) {
+
+                Integer url1=list1.get(i).getSurveyId();
                 System.out.println(url1);
                 String titleof=list1.get(i).getSurveyName();
                 System.out.println(titleof);

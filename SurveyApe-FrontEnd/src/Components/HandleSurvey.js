@@ -14,13 +14,22 @@ class HandleSurvey extends Component{
 
         console.log(this.props.match.params.number);
         var url = this.props.match.params.number;
-        console.log(url);
-        var newurl=url.charAt(url.length-1);
-        var mailurl=url.substring(1,url.length-2);
+        var b = url.split(".");
+        console.log("b last: ", b[b.length-1]);
+        console.log("b: ",b);
+        var sat = "";//ength -2]
+        for(var i=1; i<b.length-2;i++)
+            sat += b[i] + ".";
+        sat += b[b.length-2]
+        console.log("sat: ",sat);
+        console.log(typeof(sat));
+        var mailurl=sat;
+        var newurl="";
+        newurl+=b[b.length-1];
         console.log(mailurl);
+
         console.log(newurl);
         this.props.handleurlvalue(newurl,mailurl);
-
 
     }
 

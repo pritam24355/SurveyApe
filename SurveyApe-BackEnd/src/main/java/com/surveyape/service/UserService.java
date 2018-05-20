@@ -67,13 +67,13 @@ public class UserService {
 
 	}
 
-    public Questions submitquestions(Survey idof,String questionText,String questionType){
-		ObjectMapper mapper = new ObjectMapper();
+    public Questions submitquestions(Questions idof){
+		/*ObjectMapper mapper = new ObjectMapper();
 		Questions que=new Questions();
 		que.setSurveyId(idof);
 		que.setQuestionName(questionText);
-		que.setQuestionType(questionType);
-		return questionsdao.save(que);
+		que.setQuestionType(questionType);*/
+		return questionsdao.save(idof);
 
 
 	}
@@ -136,6 +136,11 @@ public class UserService {
         return surveyDAO.findByIsUniqueNotNull();
 
     }
+
+	public List<Survey> findallsurveybyme(User email){
+		return surveyDAO.findAllByEmail(email);
+
+	}
 	public SurveyAttendee setattendeeagain(SurveyAttendee su){
 		return surveyAttendeeDAO.save(su);
 	}

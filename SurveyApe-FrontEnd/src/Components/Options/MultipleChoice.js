@@ -20,7 +20,7 @@ class MultipleChoice extends Component{
     }
 
     handleShortChange(event) {
-        this.props.question["question"] = event.currentTarget.value;
+        this.props.question["questionName"] = event.currentTarget.value;
     }
 
     handleAnswerChange(index, event) {
@@ -64,7 +64,7 @@ class MultipleChoice extends Component{
                             {
                                 !this.props.answerMode && this.props.question.options.map((el, index) => {
                                     return <div>
-                                        <input type = "text" placeholder="your Option text here" onChange={this.updateOption.bind(this, index)}/>
+                                        <input type = "text" placeholder="your Option text here" onChange={this.updateOption.bind(this, index)}value={this.props.question.questionName}/>
                                         <button type="button" onClick={this.deleteOption.bind(this, index)}>delete</button>
                                     </div>
                                 }) ||

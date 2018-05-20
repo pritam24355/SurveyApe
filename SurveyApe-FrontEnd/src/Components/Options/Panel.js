@@ -11,6 +11,7 @@ class Panel extends Component{
         }
     }
     componentWillMount(){
+        debugger;
     }
 
     render(){

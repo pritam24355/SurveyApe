@@ -14,7 +14,7 @@ class Date extends Component{
     }
 
     handleShortChange(event) {
-        this.props.question["question"] = event.currentTarget.value;
+        this.props.question["questionName"] = event.currentTarget.value;
     }
 
     handleAnswerChange(event) {
@@ -32,7 +32,7 @@ class Date extends Component{
                                 this.props.answerMode && <p>{this.props.question.questionName}</p> ||
                                 !this.props.answerMode &&
                                 <input onChange={ (e) => this.handleShortChange(e)} type="text" className="form-control" name="inputshortform"
-                                       id="inputshortform" placeholder="Question Text"/>
+                                       id="inputshortform" placeholder="Question Text" value={this.props.question.questionName}/>
 
                             }
 

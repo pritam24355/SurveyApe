@@ -67,10 +67,20 @@ class OpenSurvey extends Component {
         event.preventDefault();
         var url = event.currentTarget.getAttribute("href");
         console.log(url);
-        var mailurl=url.substring(34,url.length-2);
+        var b = url.split(".");
+        console.log("b last: ", b[b.length-1]);
+        console.log("b: ",b);
+        var sat = "";//ength -2]
+        for(var i=4; i<b.length-2;i++)
+            sat += b[i] + ".";
+        sat += b[b.length-2];
+        console.log("sat: ",sat);
+        console.log(typeof(sat));
+        var mailurl=sat;
+        var newurl="";
+        newurl+=b[b.length-1];
         console.log(mailurl);
 
-        var newurl=url.charAt(url.length-1);
         console.log(newurl);
         this.props.handleurlvalue(newurl,mailurl);
 

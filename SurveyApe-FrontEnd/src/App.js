@@ -14,6 +14,8 @@ import Navbar from './Components/Navbar';
 import OpenSurvey from './Components/OpenSurvey';
 import NewUnique from './Components/NewUnique';
 import InsertAttendee from './Components/InsertAttendee';
+import ViewMySurvey from './Components/ViewMySurvey';
+import EditSurvey from './Components/EditSurvey';
 
 import AlertContainer from 'react-alert';
 import {alertOptions, showAlert} from "./Components/alertConfig";
@@ -56,6 +58,7 @@ handleSubmit=(userdata)=>  {
                     isLoggedIn: false,
                     message: "Error with input. Please Try again..!!"
                 });
+                alert(res.status);
             }
         })
         .catch((err) => {
@@ -80,6 +83,7 @@ handleSubmit=(userdata)=>  {
                          isLoggedIn: true,
                          username: data.email
                      });
+                     alert("Successful Login")
                      console.log(this.state);
                  });
 
@@ -89,6 +93,7 @@ handleSubmit=(userdata)=>  {
                          isLoggedIn: false,
                          message: "Wrong username or password. Try again..!!"
                      });
+                     alert("wrong username or password")
                  }
              }
 
@@ -113,6 +118,7 @@ handleSubmit=(userdata)=>  {
                                 isLoggedIn: true,
                                 username: data.email
                             });
+                            alert("Email Verified Successfully")
                             console.log(this.state);
                         });
 
@@ -122,6 +128,8 @@ handleSubmit=(userdata)=>  {
                             isLoggedIn: false,
                             message: "Wrong Code. Try again..!!"
                         });
+                        alert("Wrong code")
+
                     }
                 }
             )
@@ -135,8 +143,11 @@ handleSubmit=(userdata)=>  {
             .then((res) => {
                     console.log(res.status);
                     if (res.status === 200) {
+                        alert("Survey Submitted successfully")
+
                         this.props.history.push("/login");
                     } else if (res.status === 400) {
+                        alert("Survey Failed to Submit")
 
                     }
                 }
@@ -146,6 +157,15 @@ handleSubmit=(userdata)=>  {
             })
 
 }
+    handleurlvalue2(url){
+        this.setState({
+            ...this.state,
+            url:url
+        });
+        this.props.history.push("/editsurvey");
+
+    }
+
     handleurlvalue(url,mailurl){
         console.log("ala re")
         this.setState({
@@ -187,8 +207,11 @@ handleSubmit=(userdata)=>  {
                             message: "Wrong Code. Try again..!!",
                             surveyId:""
                         });
+                        alert("Logged out Successfully");
                         this.props.history.push("/login");
                     } else if (res.status === 400) {
+                        alert("Error in logging out");
+
                         this.props.history.push("/home")
                     }
                 }
@@ -261,6 +284,8 @@ handleSubmit=(userdata)=>  {
 
             <Route exact path="/newunique" component={()=> <NewUnique surveyId={this.state.surveyId} handleLogout={this.handleLogout.bind(this)} isLoggedIn={this.state.isLoggedIn} username={this.state.username}/>}/>
             <Route exact path="/openuniqueinsert" component={()=> <InsertAttendee surveyId={this.state.surveyId} handleLogout={this.handleLogout.bind(this)} isLoggedIn={this.state.isLoggedIn} username={this.state.username}/>}/>
+            <Route exact path="/viewmysurvey" component={()=> <ViewMySurvey handleLogout={this.handleLogout.bind(this)} handleurlvalue2={this.handleurlvalue2.bind(this)}handlePageChange={this.handlePageChange} handleSubmitSurvey={this.handleSubmitSurvey} isLoggedIn={this.state.isLoggedIn} username={this.state.username}/>}/>
+            <Route exact path="/editsurvey" component={()=> <EditSurvey handleLogout={this.handleLogout.bind(this)} url1={this.state.url} handlePageChange={this.handlePageChange} handleSubmitSurvey={this.handleSubmitSurvey} isLoggedIn={this.state.isLoggedIn} username={this.state.username}/>}/>
 
 
 

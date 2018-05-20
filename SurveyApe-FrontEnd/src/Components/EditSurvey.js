@@ -12,7 +12,7 @@ import * as API from '../api/API';
 import Star from './Options/Star';
 import YesNo from './Options/YesNo';
 
-class Form extends Component{
+class EditSurvey extends Component{
     constructor(props){
         super();
         this.state={
@@ -20,11 +20,17 @@ class Form extends Component{
             AddQuestionFlag:false,
             Title:"",
             inputemail:"",
-            closed:false
+            closed:false,
+            idof:""
 
         }
     }
-    componentWillMount(){
+    componentWillMount() {
+
+        console.log(this.props.url1);
+        //var i=this.props.url1;
+
+        console.log(this.state);
         API.doCheckSession()
             .then((res) => {
                     console.log(res.status);
@@ -56,24 +62,61 @@ class Form extends Component{
                 console.log(err);
             })
 
-        console.log(this.state.AddQuestionFlag);
-        console.log(this.props.isLoggedIn);
-        console.log(this.props.username);
 
-        /*if(!this.props.isLoggedIn){
-            this.props.history.push("/");
-        }*/
-        /* this.setState({
-             isLoggedIn: this.props.isLoggedIn,
-             username:this.props.username
-         });*/
+
+
+
+
+
+
+
+        //debugger;
+        this.handleSurveyQuestions(this.props.url1);
     }
-    handlePageChange = ((page) => {
-        this.props.history.push(page);
-    });
+
+    handleAnswerChange(questionId, answer) {
+
+        this.state.answers[questionId] = answer
+    }
+
+    handleSurveyQuestions(userdata) {
+//        debugger;
+        console.log(userdata);
+        /*this.setState({
+            title:userdata
+        });*/
+        this.setState({
+            idof:userdata
+        });
+        let form = {
+            idof: userdata
+        }
+        console.log(form);
+        let self = this;
+        API.dogetMySurveyQuestions(form)
+            .then((res) => {
+                    console.log(res.status);
+                    if (res.status === 200) {
+                        res.json().then(data => {
+                            console.log(data);
+                            self.setState({
+                                questionsarray: data
+                            });
 
 
-    handleFormChange(event) {
+                        })
+
+                    } else if (res.status === 404) {
+                        console.log("No survey found for you");
+                    }
+                }
+            )
+            .catch((err) => {
+                console.log(err);
+            })
+    }
+
+    handleFormChange(event){
         this.setState(
             ...this.state,
             {
@@ -224,8 +267,34 @@ class Form extends Component{
                                                 break;
 
                                         }
+
                                     })
                                 }
+                               {/* {
+                                    this.state.questionsarray.map((question) => {
+                                        switch (question.questionType) {
+                                            case "ST":
+                                                return <Shorttext question={question}/>
+                                                break;
+                                            case "DATE":
+                                                return <Date question={question}/>
+                                                break;
+
+                                            case "STAR":
+                                                return <Star question={question}/>
+                                                break;
+
+                                            case "MC":
+                                                return <MultipleChoice question={question}/>
+                                                break;
+                                            case "BOOL":
+                                                return <YesNo question={question}/>
+                                                break;
+
+                                        }
+
+                                    })
+                                }*/}
 
 
                                 {
@@ -284,4 +353,4 @@ class Form extends Component{
 }
 
 
-export default withRouter(Form);
+export default withRouter(EditSurvey);

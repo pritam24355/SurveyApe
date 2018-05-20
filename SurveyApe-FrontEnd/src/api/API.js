@@ -1,4 +1,4 @@
-const api = 'http://localhost:8080';
+const api = 'http://13.59.245.137:8080';
 const headers = {
     'Accept': 'application/json'
 };
@@ -61,7 +61,7 @@ export const doVerify = (payload) =>
 
 export const doSubmitSurvey = (payload) =>
     fetch(`${api}/submitsurvey`, {
-        method: 'POST',
+        method: 'PUT',
         headers: {
             ...headers,
             'Content-Type': 'application/json'
@@ -78,6 +78,23 @@ export const doSubmitSurvey = (payload) =>
 
 export const dogetSurveyQuestions = (payload) =>
     fetch(`${api}/getsurvey`, {
+        method: 'POST',
+        headers: {
+            ...headers,
+            'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+        body: JSON.stringify(payload)
+    }).then(res => {
+        return res;
+    })
+        .catch(error => {
+            console.log("This is error");
+            return error;
+        });
+
+export const dogetMySurveyQuestions = (payload) =>
+    fetch(`${api}/geteditsurvey`, {
         method: 'POST',
         headers: {
             ...headers,
@@ -213,6 +230,22 @@ export const doInsertAttendee = (payload) =>
 
 export const dogetOpenUniqueSurvey = (payload) =>
     fetch(`${api}/getopenuniquesure`, {
+        method: 'GET',
+        headers: {
+            ...headers,
+            'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+    }).then(res => {
+        return res;
+    })
+        .catch(error => {
+            console.log("This is error");
+            return error;
+        });
+
+export const dogetMySurvey = (payload) =>
+    fetch(`${api}/getmysurvey`, {
         method: 'GET',
         headers: {
             ...headers,

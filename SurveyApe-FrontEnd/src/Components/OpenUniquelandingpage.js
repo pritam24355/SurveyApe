@@ -17,7 +17,7 @@ class OpenUniquelandingpage extends Component {
         console.log(this.props.match.params.number);
         var url=this.props.match.params.number;
         var surveyid=url.substring(11,url.length);
-
+        console.log(url);
         //var surveyid=url.charAt(url.length-1);
         console.log(surveyid);
         this.props.handleSurveyId(surveyid);

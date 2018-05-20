@@ -125,10 +125,15 @@ class Home extends Component{
 
                             <Link to="/listsurvey" className="btn btn-success takesurvey">Take Survey</Link>
                         </div>
-                    </div>
-                    <div className="row">
-                        <Link to="/listsurvey" className="btn btn-success takesurvey">Unique Survey</Link>
 
+                    <div className="col-md-6">
+                        <Link to="/listopensurvey" className="btn btn-success takesurvey">Open and Unique Survey</Link>
+
+                    </div>
+                    <div className="col-md-6">
+                        <Link to="/viewmysurvey" className="btn btn-success takesurvey">View & Edit Survey</Link>
+
+                    </div>
                     </div>
                 </div>
 
