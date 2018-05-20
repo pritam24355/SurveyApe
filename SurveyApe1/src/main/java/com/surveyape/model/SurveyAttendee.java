@@ -23,7 +23,7 @@ public class SurveyAttendee {
     @Column(name="emailId")
     private String emailId;
 
-    @Column(name="surveyUrl")
+    @Column(name="surveyUrl",unique = true)
     private String surveyUrl;
 
     @Column(name="isValid")

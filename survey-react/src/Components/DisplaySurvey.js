@@ -48,7 +48,7 @@ handleLink(event){
     var mailurl=url.substring(34,url.length-2);
     console.log(mailurl);
     var newurl=url.charAt(url.length-1);
-    console.log(newurl)
+    console.log(newurl);
     this.props.handleurlvalue(newurl,mailurl);
 
 }

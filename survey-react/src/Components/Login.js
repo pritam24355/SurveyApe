@@ -75,6 +75,8 @@ class Login extends Component {
         if (this.props.isLoggedIn){
             this.props.handlePageChange("/home");
         }
+
+
         console.log(this.props.username);
 
 

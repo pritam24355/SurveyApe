@@ -50,6 +50,15 @@ public class TTestTypeURL_URLGenerator {
             return ret;
         }
 
+    public String GetURL1 (String email,Integer s)
+    {
+        String      ret;
+
+        ret     = _GetPartProtocol ()+"://localhost:3000/"+"opensurvey/"+"."+ email+"."+s;
+
+        return ret;
+    }
+
         public String _GetPartHostPort ()
         {
             boolean     hasPort;

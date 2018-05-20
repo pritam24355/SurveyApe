@@ -11,5 +11,6 @@ public interface SurveyDAO extends JpaRepository<Survey,Integer> {
         List<Survey> findAll();
         Survey findBySurveyId(Integer natt);
         List<Survey> findByOpenurlNotNull();
+        List<Survey> findByIsUniqueNotNull();
 
 }

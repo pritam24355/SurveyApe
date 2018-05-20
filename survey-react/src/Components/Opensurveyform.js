@@ -6,6 +6,9 @@ import Navbar from './Navbar';
 import * as API from '../api/API';
 import Shorttext from './Options/Shorttext';
 import Date from './Options/Date';
+import YesNo from './Options/YesNo';
+import Star from './Options/Star';
+
 
 class Opensurveyform extends Component{
     constructor(props){
@@ -133,6 +136,11 @@ class Opensurveyform extends Component{
                                         case "DATE":
                                             return <Date question={question} answerMode={true} onAnswer={this.handleAnswerChange.bind(this)}/>
                                             break;
+                                        case "STAR":
+                                            return <Star question={question} answerMode={true} onAnswer={this.handleAnswerChange.bind(this)}/>
+
+                                        case "BOOL":
+                                            return <YesNo question={question} answerMode={true} onAnswer={this.handleAnswerChange.bind(this)}/>
 
                                     }
                                 })

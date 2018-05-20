@@ -9,6 +9,8 @@ import Date from './Options/Date';
 import Panel from './Options/Panel'
 import Navbar from './Navbar';
 import * as API from '../api/API';
+import Star from './Options/Star';
+import YesNo from './Options/YesNo';
 
 class Form extends Component{
     constructor(props){
@@ -85,6 +87,7 @@ class Form extends Component{
     }
 
 
+
     addQuestion(type) {
         switch (type) {
             case "DATE":
@@ -152,7 +155,7 @@ class Form extends Component{
         formData=this.state;
         console.log(formData);
         if(this.state.role=="yes"&& this.state.inputemail!=""){
-            alert("select only one type of survey");
+            alert("select only one type of url");
             this.props.history.push("/createsurvey");
         }
         this.props.handleSubmitSurvey(formData);
@@ -209,8 +212,17 @@ class Form extends Component{
                                         return <Date question={question}/>
                                             break;
 
+                                    case "STAR":
+                                        return <Star question={question}/>
+                                        break;
+
                                     case "MC":
                                         return <MultipleChoice question={question}/>
+                                        break;
+                                    case "BOOL":
+                                        return <YesNo question={question}/>
+                                        break;
+
                                 }
                             })
                         }

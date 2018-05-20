@@ -131,6 +131,11 @@ public class UserService {
 		return surveyDAO.findByOpenurlNotNull();
 
 	}
+
+    public List<Survey> findalluniquesurvey(){
+        return surveyDAO.findByIsUniqueNotNull();
+
+    }
 	public SurveyAttendee setattendeeagain(SurveyAttendee su){
 		return surveyAttendeeDAO.save(su);
 	}
@@ -138,6 +143,16 @@ public class UserService {
 	public SurveyAttendee setattendee(String mail,Survey sur){
 		return surveyAttendeeDAO.findByEmailIdAndAndSurveyId(mail,sur);
 	}
+
+/*
+	public SurveyAttendee insertattendee(SurveyAttendee sur){
+		return surveyAttendeeDAO.save(sur);
+	}
+*/
+
+	/*public SurveyAttendee getattendee(String mail,Survey sur){
+		return surveyAttendeeDAO.findByEmailIdAndAndSurveyId(mail,sur);
+	}*/
 
 
 }

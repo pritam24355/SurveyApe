@@ -22,9 +22,9 @@ class Panel extends Component{
                             <button className="btn btn-primary" type="button" onClick={() => this.props.addQuestion("MC")} >MultipleChoice</button>
 
                             <button className="btn btn-primary pan" type="button" onClick={() => this.props.addQuestion("ST")} >Short Text</button>
-                            <button className="btn btn-primary pan" type="button" onClick={() => this.props.addQuestion("DATE")} >Date</button>
+                            <button className="btn btn-primary pan" type="button" onClick={() => this.props.addQuestion("DATE")} >StarRating</button>
                             <button className="btn btn-primary pan" type="button" onClick={() => this.props.addQuestion("BOOL")} >Yes/NO</button>
-                            <button className="btn btn-primary pan" type="button" onClick={() => this.props.addQuestion("STAR")} >StarRating</button>
+                            <button className="btn btn-primary pan" type="button" onClick={() => this.props.addQuestion("STAR")} >Date</button>
                         </div>
                     </div>
 

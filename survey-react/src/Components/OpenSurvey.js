@@ -10,9 +10,9 @@ class OpenSurvey extends Component {
         super(props);
         this.state = {
             received: false,
-            titlelist:[]
-
-
+            unireceived:false,
+            titlelist:[],
+            uniquelist:[]
         }
     }
 
@@ -40,6 +40,28 @@ class OpenSurvey extends Component {
                 console.log(err);
             })
 
+
+
+        API.dogetOpenUniqueSurvey()
+            .then((res) => {
+                    console.log(res.status);
+                    if (res.status === 200) {
+                        res.json().then(data => {
+                            console.log(data);
+                            this.setState({
+                                uniquedata: data,
+                                unireceived: true
+                            });
+                        })
+
+                    } else if (res.status === 404) {
+                        console.log("No survey found for you");
+                    }
+                }
+            )
+            .catch((err) => {
+                console.log(err);
+            })
     }
     handleLink1(event){
         event.preventDefault();
@@ -55,43 +77,53 @@ class OpenSurvey extends Component {
     }
     render() {
         if (this.state.received) {
-            return(
                 this.state.titlelist = Object.entries(this.state.titledata).map(([key, value]) => {
                     return (
-
                         <div className="container">
-                            <div className="row">
+
+
+                        <div className="row">
+                                <h3>Open Survey</h3>
                                 <h6>Survey Name:{key}</h6>
                                 <a href={value} onClick={this.handleLink1.bind(this)}>{value}</a>
                             </div>
                         </div>
                     );
+
                 })
-            )
+
+        }
+// console.log(this.state.unireceived);
+
+        if(this.state.unireceived){
+
+                this.state.uniquelist = Object.entries(this.state.uniquedata).map(([key, value]) => {
+                    return (
+                            <div className="container">
+                            <div className="row">
+                                <h3>Open Unique Survey</h3>
+                                <h6>Survey Name:{key}</h6>
+                                <a href={value}>{value}</a>
+                            </div>
+                            </div>
+
+                    );
+
+                })
+
         }
 
 
-        else {
             return (
 
-<div>
-
-
-        <Navbar handleLogout={this.props.handleLogout}/>
-
-
-
-</div>
-
-
-
-
-
+                <div>
+                    {this.state.uniquelist || <div></div>}
+                    {this.state.titlelist || <div></div>}
+                </div>
 
             );
 
 
-        }
     }
 }
 

@@ -9,9 +9,11 @@ import Form from './Components/Form';
 import DisplayForm from './Components/DisplayForm';
 import HandleSurvey from './Components/HandleSurvey';
 import Opensurveyform from './Components/Opensurveyform';
-
+import OpenUniquelandingpage from './Components/OpenUniquelandingpage';
 import Navbar from './Components/Navbar';
 import OpenSurvey from './Components/OpenSurvey';
+import NewUnique from './Components/NewUnique';
+import InsertAttendee from './Components/InsertAttendee';
 
 import AlertContainer from 'react-alert';
 import {alertOptions, showAlert} from "./Components/alertConfig";
@@ -26,7 +28,8 @@ class App extends Component {
         this.state = {
             isLoggedIn: false,
             username: '',
-            url:''
+            url:'',
+            surveyId:''
         };
     }
 
@@ -152,6 +155,13 @@ handleSubmit=(userdata)=>  {
         });
         this.props.history.push("/takesurvey");
     }
+    handleSurveyId(surveyid){
+        this.setState({
+            ...this.state,
+            surveyId:surveyid
+        });
+        this.props.history.push("/newunique");
+    }
     handleurlvalue1(url,mailurl){
         console.log("ala re")
         this.setState({
@@ -174,7 +184,8 @@ handleSubmit=(userdata)=>  {
                     if (res.status === 200) {
                         this.setState({
                             isLoggedIn: false,
-                            message: "Wrong Code. Try again..!!"
+                            message: "Wrong Code. Try again..!!",
+                            surveyId:""
                         });
                         this.props.history.push("/login");
                     } else if (res.status === 400) {
@@ -233,10 +244,10 @@ handleSubmit=(userdata)=>  {
     <div>
 
         <Switch>
-            <Route exact path="/register" component={()=> <Signup handleSubmit={this.handleSubmit}/>}/>
-            <Route exact path="/login" component={()=><Login handlePageChange={this.handlePageChange.bind(this)}isLoggedIn={this.state.isLoggedIn} username={this.state.username} handleSubmit={this.handleSubmitLogin}/>}/>
-            <Route exact path="/verification" component={()=> <Verification handleSubmit={this.handleVerification}/>}/>
-            <Route exact path="/home" component={()=> <Home handleLogout={this.handleLogout.bind(this)}handlePageChange={this.handlePageChange.bind(this)} isLoggedIn={this.state.isLoggedIn} username={this.state.username} />}/>
+            <Route exact path="/register" component={()=> <Signup surveyId={this.state.surveyId} handleSubmit={this.handleSubmit}/>}/>
+            <Route exact path="/login" component={()=><Login handlePageChange={this.handlePageChange.bind(this)} surveyId={this.state.surveyId} isLoggedIn={this.state.isLoggedIn} username={this.state.username} handleSubmit={this.handleSubmitLogin}/>}/>
+            <Route exact path="/verification" component={()=> <Verification surveyId={this.state.surveyId} handleSubmit={this.handleVerification}/>}/>
+            <Route exact path="/home" component={()=> <Home surveyId={this.state.surveyId} handleLogout={this.handleLogout.bind(this)}handlePageChange={this.handlePageChange.bind(this)} isLoggedIn={this.state.isLoggedIn} username={this.state.username} />}/>
             <Route exact path="/createsurvey" component={()=> <Form handleLogout={this.handleLogout.bind(this)}handlePageChange={this.handlePageChange} handleSubmitSurvey={this.handleSubmitSurvey} isLoggedIn={this.state.isLoggedIn} username={this.state.username}/>}/>
             <Route exact path="/takesurvey" component={()=> <DisplayForm handleLogout={this.handleLogout.bind(this)} mailurl={this.state.mailurl} url1={this.state.url} handlePageChange={this.handlePageChange} handleSubmitSurvey={this.handleSubmitSurvey} isLoggedIn={this.state.isLoggedIn} username={this.state.username}/>}/>
             <Route exact path="/listsurvey" component={()=> <DisplaySurvey handleLogout={this.handleLogout.bind(this)} handleurlvalue={this.handleurlvalue.bind(this)}handlePageChange={this.handlePageChange} handleSubmitSurvey={this.handleSubmitSurvey} isLoggedIn={this.state.isLoggedIn} username={this.state.username}/>}/>
@@ -244,6 +255,16 @@ handleSubmit=(userdata)=>  {
 
             <Route exact path="/listopensurvey" component={()=> <OpenSurvey handleLogout={this.handleLogout.bind(this)} handleurlvalue={this.handleurlvalue1.bind(this)}handlePageChange={this.handlePageChange} handleSubmitSurvey={this.handleSubmitSurvey} isLoggedIn={this.state.isLoggedIn} username={this.state.username}/>}/>
             <Route exact path="/listopensurvey/takesurvey" component={()=> <Opensurveyform mailurl={this.state.mailurl} url1={this.state.url} handleurlvalue={this.handleurlvalue1.bind(this)}handlePageChange={this.handlePageChange} handleSubmitSurvey={this.handleSubmitSurvey} />}/>
+
+
+            <Route  path="/opensurvey/:number" component={()=> <OpenUniquelandingpage  handleSurveyId={this.handleSurveyId.bind(this)} isLoggedIn={this.state.isLoggedIn} username={this.state.username}/>}/>
+
+            <Route exact path="/newunique" component={()=> <NewUnique surveyId={this.state.surveyId} handleLogout={this.handleLogout.bind(this)} isLoggedIn={this.state.isLoggedIn} username={this.state.username}/>}/>
+            <Route exact path="/openuniqueinsert" component={()=> <InsertAttendee surveyId={this.state.surveyId} handleLogout={this.handleLogout.bind(this)} isLoggedIn={this.state.isLoggedIn} username={this.state.username}/>}/>
+
+
+
+
 
             <div className="container">
 
@@ -260,9 +281,10 @@ handleSubmit=(userdata)=>  {
                 <div className="row">
                     <div className="col-md-12">
 
-                        <Link to="/listopensurvey" className="btn btn-success takesurveybutton">Take Survey</Link>
+                        <Link to="/listopensurvey" className="btn btn-success takesurveybutton">Take Open Survey</Link>
                     </div>
                 </div>
+
                 <div className="row">
                     <div className="col-md-12">
                         <Link to="/login" className="btn btn-success loginbutton">Login</Link>

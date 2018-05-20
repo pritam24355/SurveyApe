@@ -24,6 +24,9 @@ import java.util.List;
         @Column(name="openurl")
     private String openurl;
 
+    @Column(name="isUnique")
+    private String isUnique;
+
     @OneToMany(mappedBy = "surveyId", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     private List<SurveyAttendee> surveyattendee;
 
@@ -84,6 +87,15 @@ import java.util.List;
 
     public void setOpenurl(String openurl) {
         this.openurl = openurl;
+    }
+
+
+    public String getIsUnique() {
+        return isUnique;
+    }
+
+    public void setIsUnique(String isUnique) {
+        this.isUnique = isUnique;
     }
 }
 

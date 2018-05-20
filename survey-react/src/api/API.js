@@ -192,3 +192,54 @@ export const dogetOpenSurvey = () =>
             console.log("This is error");
             return error;
         });
+
+
+export const doInsertAttendee = (payload) =>
+    fetch(`${api}/insertattendee`, {
+        method: 'POST',
+        headers: {
+            ...headers,
+            'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+        body:payload
+    }).then(res => {
+        return res;
+    })
+        .catch(error => {
+            console.log("This is error");
+            return error;
+        });
+
+export const dogetOpenUniqueSurvey = (payload) =>
+    fetch(`${api}/getopenuniquesure`, {
+        method: 'GET',
+        headers: {
+            ...headers,
+            'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+    }).then(res => {
+        return res;
+    })
+        .catch(error => {
+            console.log("This is error");
+            return error;
+        });
+
+export const dosendmail = (payload) =>
+    fetch(`${api}/dosendmail`, {
+        method: 'POST',
+        headers: {
+            ...headers,
+            'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+        body:JSON.stringify(payload)
+    }).then(res => {
+        return res;
+    })
+        .catch(error => {
+            console.log("This is error");
+            return error;
+        });

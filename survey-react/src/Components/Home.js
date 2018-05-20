@@ -14,8 +14,11 @@ class Home extends Component{
 
         }
     }
-    componentWillMount(){
+    componentWillMount() {
+        if (this.props.surveyId != "") {
+            this.props.history.push("/openuniqueinsert")
 
+        }
         API.doCheckSession()
             .then((res) => {
                     console.log(res.status);
@@ -48,22 +51,11 @@ class Home extends Component{
             })
 
 
-
-
-
-
-
-
-
-
-
-
-
-    /*console.log(this.props.username);
-    console.log(this.props.isLoggedIn);*/
-       // if(!this.props.isLoggedIn){
-         //   this.props.history.push("/login")
-        }
+        /*console.log(this.props.username);
+        console.log(this.props.isLoggedIn);*/
+        // if(!this.props.isLoggedIn){
+        //   this.props.history.push("/login")
+    }
 
 
  handleLogout(){
@@ -133,6 +125,10 @@ class Home extends Component{
 
                             <Link to="/listsurvey" className="btn btn-success takesurvey">Take Survey</Link>
                         </div>
+                    </div>
+                    <div className="row">
+                        <Link to="/listsurvey" className="btn btn-success takesurvey">Unique Survey</Link>
+
                     </div>
                 </div>
 

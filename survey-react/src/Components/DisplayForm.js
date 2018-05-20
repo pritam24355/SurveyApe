@@ -5,6 +5,9 @@ import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import Navbar from './Navbar';
 import * as API from '../api/API';
 import Shorttext from './Options/Shorttext';
+import Star from './Options/Star';
+import YesNo from './Options/YesNo';
+
 import Date from './Options/Date';
 import MultipleChoice from './Options/MultipleChoice';
 
@@ -71,6 +74,8 @@ class DisplayForm extends Component{
                         res.json().then(data => {
 
                             console.log(data);
+                            debugger;
+
                             this.setState({
                                 loading: false,
                                 questions: data
@@ -125,21 +130,24 @@ class DisplayForm extends Component{
 
                     <div className="row">
                         <div className="col-md-4 col-sm-4 col-lg-4">
-                            <label className="col-lg-3">{this.state.title}</label>
                             <form className="form-horizontal" onSubmit={this.submitSurvey.bind(this)}>
                                 {
+
                                     this.state.questions.map((question) => {
                                         switch(question.questionType) {
+
                                             case "ST":
                                                 return <Shorttext question={question} answerMode={true} onAnswer={this.handleAnswerChange.bind(this)}/>
-
-
                                             case "MC":
                                                 return <MultipleChoice question={question} answerMode={true} onAnswer={this.handleAnswerChange.bind(this)}/>
                                             case "DATE":
                                                 return <Date question={question} answerMode={true} onAnswer={this.handleAnswerChange.bind(this)}/>
 
+                                            case "STAR":
+                                                return <Star question={question} answerMode={true} onAnswer={this.handleAnswerChange.bind(this)}/>
 
+                                            case "BOOL":
+                                                return <YesNo question={question} answerMode={true} onAnswer={this.handleAnswerChange.bind(this)}/>
 
                                         }
                                     })
