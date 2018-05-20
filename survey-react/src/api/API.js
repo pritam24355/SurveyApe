@@ -1,4 +1,4 @@
-const api = 'http://localhost:8080';
+const api = 'http://13.59.245.137:8080';
 const headers = {
     'Accept': 'application/json'
 };
@@ -162,7 +162,7 @@ export const dogetSurveyTitle = (payload) =>
 
 
 export const dogethandlesurvey = () =>
-    fetch(`${api}//http://localhost:3000/surveyform/:number`, {
+    fetch(`${api}//http://18.217.64.116:3000/surveyform/:number`, {
         method: 'GET',
         headers: {
             ...headers,

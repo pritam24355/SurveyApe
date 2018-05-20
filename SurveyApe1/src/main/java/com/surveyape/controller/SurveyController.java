@@ -6,7 +6,7 @@ import com.surveyape.model.*;
         import com.fasterxml.jackson.databind.ObjectMapper;
 
 
-import jdk.internal.cmm.SystemResourcePressureImpl;
+//import jdk.internal.cmm.SystemResourcePressureImpl;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +30,8 @@ import static java.lang.Integer.parseInt;
 
 
 @Controller
-//@CrossOrigin(origins = "http://localhost:3000")
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://18.217.64.116:3000")
+//@CrossOrigin(origins = "*")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SurveyController {
 
