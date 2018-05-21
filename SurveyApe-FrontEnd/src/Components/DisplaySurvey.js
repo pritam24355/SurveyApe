@@ -67,8 +67,10 @@ handleLink(event){
     render() {
         if (this.state.received) {
             return(
-
-            this.state.titlelist = Object.entries(this.state.titledata).map(([key, value]) => {
+    <div>
+        <Link to="/home" className="btn btn-success takesurvey">Home
+        </Link>
+        {this.state.titlelist = Object.entries(this.state.titledata).map(([key, value]) => {
                 return (
 
                     <div className="container">
@@ -78,9 +80,12 @@ handleLink(event){
                     </div>
                     </div>
                 );
-            })
-            )
+            })}
+
+    </div>
+        )
         }
+
 
         else {
             return (

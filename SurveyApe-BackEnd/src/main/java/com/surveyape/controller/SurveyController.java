@@ -37,7 +37,7 @@ import static java.lang.Integer.parseInt;
 
 @Controller
 @CrossOrigin(origins = "http://18.217.64.116:3000")
-//@CrossOrigin(origins = "*")
+//@CrossOrigin(origins = "http://18.217.64.116:3000", methods = {RequestMethod.DELETE, RequestMethod.POST, RequestMethod.PUT})
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SurveyController {
 
@@ -111,9 +111,9 @@ public class SurveyController {
         }
 
     }
-
+    //@CrossOrigin(origins = "http://18.217.64.116:3000")
     @PutMapping(path = "/submitsurvey", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> submitsurvey(@RequestBody String json, HttpSession session) throws IOException {
+    public ResponseEntity<?> submitsurvey1(@RequestBody String json, HttpSession session) throws IOException {
         try {
             System.out.println(json);
             JSONObject reqObj = new JSONObject(json);
@@ -180,7 +180,7 @@ public class SurveyController {
                          idof.setQuestionName(questionText);
                          idof.setQuestionType(questionType);
                          if(questionOnj.has("questionId")){
-                             idof.setQuestionId(Integer.valueOf(questionOnj.getString("questionId")));
+                             idof.setQuestionId(questionOnj.getInt("questionId"));
                          }
                          Questions questof = userService.submitquestions(idof);
 
@@ -288,7 +288,7 @@ public class SurveyController {
                     idof.setQuestionName(questionText);
                     idof.setQuestionType(questionType);
                     if(questionOnj.has("questionId")){
-                        idof.setQuestionId(Integer.valueOf(questionOnj.getString("questionId")));
+                        idof.setQuestionId((Integer) questionOnj.get("questionId"));
                     }
                     Questions questof = userService.submitquestions(idof);
 

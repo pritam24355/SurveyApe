@@ -127,8 +127,11 @@ class OpenSurvey extends Component {
             return (
 
                 <div>
+                    <Link to="/home" className="btn btn-success takesurvey">Home
+                    </Link>
                     {this.state.uniquelist || <div></div>}
                     {this.state.titlelist || <div></div>}
+
                 </div>
 
             );

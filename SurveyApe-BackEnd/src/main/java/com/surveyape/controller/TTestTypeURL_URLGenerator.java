@@ -54,7 +54,7 @@ public class TTestTypeURL_URLGenerator {
     {
         String      ret;
 
-        ret     = _GetPartProtocol ()+"://18.217.64.116:3000"+"opensurvey/"+"."+ email+"."+s;
+        ret     = _GetPartProtocol ()+"://18.217.64.116:3000/"+"opensurvey/"+"."+ email+"."+s;
 
         return ret;
     }

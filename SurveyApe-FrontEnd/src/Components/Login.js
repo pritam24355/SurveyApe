@@ -100,7 +100,6 @@ class Login extends Component {
                             isLoggedIn: false,
                             message: "Wrong username or password. Try again..!!"
                         });
-                        this.props.history.push("/login")
                     }
                 }
             )

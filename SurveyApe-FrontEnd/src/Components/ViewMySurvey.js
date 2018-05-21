@@ -71,6 +71,8 @@ class ViewMySurvey extends Component {
         return (
 
             <div>
+                <Link to="/home" className="btn btn-success takesurvey">Home
+                </Link>
                 {this.state.titlelist || <div></div>}
             </div>
 
