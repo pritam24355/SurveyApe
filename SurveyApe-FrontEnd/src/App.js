@@ -60,6 +60,14 @@ handleSubmit=(userdata)=>  {
                 });
                 alert(res.status);
             }
+            else if (res.status === 500) {
+                this.setState({
+                    ...this.state,
+                    isLoggedIn: false,
+                    message: "Error with input. Please Try again..!!"
+                });
+                alert("Failed to signup");
+            }
         })
         .catch((err) => {
             console.log(err);

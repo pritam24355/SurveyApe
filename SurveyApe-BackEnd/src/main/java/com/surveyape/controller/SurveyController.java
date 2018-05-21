@@ -149,6 +149,7 @@ public class SurveyController {
                      if (reqObj.has("idof")){
                          Survey sis=new Survey();
                          s1.setSurveyId(Integer.valueOf(reqObj.getString("idof")));
+
                          }
                      //s1.setOpenurl(url);
                      Survey surveyinfo = userService.setsurveyinfo(s1);
@@ -156,7 +157,7 @@ public class SurveyController {
                      String urlfinal = tt.GetURL1("uniqueurl", sursid);
                      surveyinfo.setIsUnique(urlfinal);
                      System.out.println(urlfinal);
-                     Survey surveyinfo1 = userService.setsurveyinfo(s1);
+                     Survey surveyinfo1 = userService.setsurveyinfo(surveyinfo);
                     int o=0;
                      //s1.setOpenurl(urlfinal);
                      //Survey surveyinfo1 = userService.setsurveyinfo(s1);

@@ -70,6 +70,8 @@ handleLink(event){
     <div>
         <Link to="/home" className="btn btn-success takesurvey">Home
         </Link>
+        <Link to="/" className="btn btn-success takesurvey">Landing Page
+    </Link>
         {this.state.titlelist = Object.entries(this.state.titledata).map(([key, value]) => {
                 return (
 

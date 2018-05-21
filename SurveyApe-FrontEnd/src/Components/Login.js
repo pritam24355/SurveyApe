@@ -101,6 +101,15 @@ class Login extends Component {
                             message: "Wrong username or password. Try again..!!"
                         });
                     }
+                    else if (res.status === 500) {
+
+
+                        this.setState({
+                            isLoggedIn: false,
+                            message: "Wrong username or password. Try again..!!"
+                        });
+                        alert("Wrong username or password")
+                    }
                 }
             )
             .catch((err) => {
