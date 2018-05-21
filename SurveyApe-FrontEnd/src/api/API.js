@@ -1,4 +1,4 @@
-const api = 'http://localhost:8080';
+const api = 'http://13.59.245.137:8080';
 const headers = {
     'Accept': 'application/json'
 };
