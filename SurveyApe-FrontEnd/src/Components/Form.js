@@ -142,24 +142,26 @@ class Form extends Component{
     handleSubmitSurveyForm() {
         // console.log(this.state.questionsarray);
         this.state.questionsarray.forEach((question) => {
-            switch(question.questionType) {
+            switch (question.questionType) {
                 case "MC":
                     var options = {};
-                    for(var i in question.options) {console.log(options[i] = question.options[i])}
+                    for (var i in question.options) {
+                        console.log(options[i] = question.options[i])
+                    }
                     question.options = options;
                     break;
             }
         });
 
         var formData = new FormData();
-        formData=this.state;
+        formData = this.state;
         console.log(formData);
-        if(this.state.role=="yes"&& this.state.inputemail!=""){
-            alert("select only one type of url");
-            this.props.history.push("/createsurvey");
+        if (this.state.role == "yes" && this.state.inputemail != "") {
+            alert("select only one type of survey");
         }
+        else {
         this.props.handleSubmitSurvey(formData);
-
+    }
 
         // ToDo: Iterate over this.state.questions and send it to your server
 

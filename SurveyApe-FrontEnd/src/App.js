@@ -103,6 +103,13 @@ handleSubmit=(userdata)=>  {
                      });
                      alert("wrong username or password")
                  }
+             else if (res.status === 500) {
+                 this.setState({
+                     isLoggedIn: false,
+                     message: "Wrong username or password. Try again..!!"
+                 });
+                 alert("wrong username or password")
+             }
              }
 
          )
@@ -154,8 +161,8 @@ handleSubmit=(userdata)=>  {
                         alert("Survey Submitted successfully")
 
                         this.props.history.push("/login");
-                    } else if (res.status === 400) {
-                        alert("Survey Failed to Submit")
+                    } else if (res.status === 500) {
+                        alert("Survey Failed to Submit:Title and Unique Survey? are required field ")
 
                     }
                 }
